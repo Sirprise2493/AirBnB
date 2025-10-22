@@ -72,3 +72,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Photos in the cloud
+gem "cloudinary"
