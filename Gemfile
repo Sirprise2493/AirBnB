@@ -75,3 +75,7 @@ end
 
 # Photos in the cloud
 gem "cloudinary"
+
+
+#Devise
+gem "devise"

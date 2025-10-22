@@ -58,7 +58,7 @@ l3 = Listing.create!(
 )
 
 puts "Creating bookings…"
-b1 = Booking.create!(
+Booking.create!(
   user:           u_guest1,
   listing:        l1,
   start_date:     Date.today + 7,
@@ -67,7 +67,7 @@ b1 = Booking.create!(
   total_price:    3 * l1.price_per_night
 )
 
-b2 = Booking.create!(
+Booking.create!(
   user:           u_guest1,
   listing:        l2,
   start_date:     Date.today + 14,
@@ -76,7 +76,7 @@ b2 = Booking.create!(
   total_price:    3 * l2.price_per_night
 )
 
-b3 = Booking.create!(
+Booking.create!(
   user:           u_guest1,
   listing:        l3,
   start_date:     Date.today + 21,

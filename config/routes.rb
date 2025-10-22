@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/show'
-  get 'bookings/new'
-  get 'bookings/create'
-  get 'bookings/show'
-  get 'listings/index'
-  get 'listings/new'
-  get 'listings/create'
-  get 'listings/show'
   # / (Homepage root_path)
   root "pages#home"
 
@@ -18,4 +10,7 @@ Rails.application.routes.draw do
 
   # /users/:id/profile (show in controller and special path user_profile_path)
   get "users/:id/profile", to: "users#show", as: :user_profile
+
+  # Devise auth
+  devise_for :users
 end
