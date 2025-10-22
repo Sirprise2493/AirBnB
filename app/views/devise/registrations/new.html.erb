@@ -6,11 +6,11 @@
     <%= f.input :first_name, required: false, input_html: { autocomplete: "given-name" } %>
     <%= f.input :last_name,  required: false, input_html: { autocomplete: "family-name" } %>
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
-    <%= f.input :password, required: true, hint: ("mindestens #{@minimum_password_length} Zeichen" if @minimum_password_length) %>
+    <%= f.input :password, required: true, hint: ("at least #{@minimum_password_length} characters" if @minimum_password_length) %>
     <%= f.input :password_confirmation, required: true %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions btn btn-primary">
     <%= f.button :submit, "Sign up" %>
   </div>
 <% end %>
