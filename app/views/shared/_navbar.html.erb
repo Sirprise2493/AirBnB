@@ -1,0 +1,18 @@
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <! Add logo here -->
+    <%= link_to "Airbnb", root_path, class: "navbar-brand" %>
+    
+    <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
+      <li class="nav-item">
+        <%= link_to "Home", root_path, class: "nav-link" %>
+      </li>
+      <li clas="nav-item">
+        <%= link_to "Log in", new_user_session_path, class: "nav-link" %>
+      </li>
+      <li clas="nav-item">
+        <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+      </li>
+    </ul>
+  </div>
+</nav>
