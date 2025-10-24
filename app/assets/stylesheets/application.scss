@@ -10,5 +10,18 @@
 // Your CSS partials
 @import "components/index";
 @import "components/navbar";
+@import "components/footer";
 @import "pages/index";
 
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+body > main,
+body > .container,
+body > .wrapper {
+  flex: 1;
+}
