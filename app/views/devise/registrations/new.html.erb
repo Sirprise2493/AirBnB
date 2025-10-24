@@ -8,6 +8,7 @@
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
     <%= f.input :password, required: true, hint: ("at least #{@minimum_password_length} characters" if @minimum_password_length) %>
     <%= f.input :password_confirmation, required: true %>
+    <%= f.input :photo, as: :file, label: "Upload your profile photo" %>
   </div>
 
   <div class="form-actions btn btn-primary">
