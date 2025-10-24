@@ -1,18 +1,74 @@
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <! Add logo here -->
-    <%= link_to "Airbnb", root_path, class: "navbar-brand" %>
-    
-    <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
-      <li class="nav-item">
-        <%= link_to "Home", root_path, class: "nav-link" %>
-      </li>
-      <li clas="nav-item">
+<nav class="navbar">
+  <div class="navbar-container">
+
+    <div class="navbar-top">
+      <div class="navbar-left">
+        <%= link_to root_path, class: "navbar-logo" do %>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg" alt="Airbnb Logo">
+        <% end %>
+      </div>
+
+      <div class="navbar-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Travel icon">
+        <span class="catchphrase">Find your next escape</span>
+      </div>
+
+      <div class="navbar-right">
         <%= link_to "Log in", new_user_session_path, class: "nav-link" %>
-      </li>
-      <li clas="nav-item">
-        <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
-      </li>
-    </ul>
+        <%= link_to "Sign up", new_user_registration_path, class: "nav-link signup" %>
+      </div>
+    </div>
+
+    <form class="search-bar" role="search">
+      <div class="search-section where">
+        <label>Where</label>
+        <input type="text" placeholder="Search destinations">
+      </div>
+
+      <div class="search-section">
+        <label>Check in</label>
+        <input type="text" placeholder="Add dates">
+      </div>
+
+      <div class="search-section">
+        <label>Check out</label>
+        <input type="text" placeholder="Add dates">
+      </div>
+
+      <div class="search-section who">
+        <label>Who</label>
+        <div class="who-wrap">
+          <input type="text" placeholder="Add guests">
+          <button class="search-btn" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 
+              1.415-1.414l-3.85-3.85zm-5.242 0a5 5 0 1 1 
+              0-10 5 5 0 0 1 0 10z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="mini-search-bar">
+      <div class="mini-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/69/69524.png" alt="home icon">
+        <span>Anywhere</span>
+      </div>
+      <span class="dot"></span>
+      <span>Anytime</span>
+      <span class="dot"></span>
+      <span>Add guests</span>
+      <button class="mini-search-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 
+          1.415-1.414l-3.85-3.85zm-5.242 0a5 5 0 1 1 
+          0-10 5 5 0 0 1 0 10z"/>
+        </svg>
+      </button>
+    </div>
+
   </div>
 </nav>
+
+

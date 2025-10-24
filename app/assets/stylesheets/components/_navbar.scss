@@ -1,12 +1,306 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+$primary: #ff385c;
+$border:  #e5e5e5;
+$text:    #222;
+$muted:   #717171;
+
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid $border;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  .navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+  }
+
+  .navbar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .navbar-left img {
+    height: 34px;
+  }
+
+  .navbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 10px;
+    position: relative;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    img {
+      height: 42px;
+      width: auto;
+      opacity: 1;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+
+    .catchphrase {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: $muted;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .nav-link {
+      color: $text;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $primary;
+      }
+
+      &.signup {
+        padding: 6px 14px;
+        border: 1px solid $primary;
+        border-radius: 999px;
+        color: $primary;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: $primary;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .search-bar {
+    margin: 0 auto;
+    width: 900px;
+    height: 56px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    overflow: hidden;
+    position: relative;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    .search-section {
+      flex: 0 1 20%;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid $border;
+
+      &:last-child { border-right: 0; }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $text;
+        margin-bottom: 2px;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.9rem;
+        color: $muted;
+        padding: 0;
+        line-height: 1.2;
+
+        &::placeholder {
+          color: $muted;
+          opacity: 1;
+        }
+      }
+
+      .flatpickr-input[readonly] {
+        color: $muted !important;
+        font-size: 0.9rem !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        cursor: pointer;
+      }
+
+      .flatpickr-input::placeholder {
+        color: $muted !important;
+        opacity: 1 !important;
+      }
+    }
+
+    .where { flex: 0 1 38%; }
+
+    .who {
+      flex: 0 1 22%;
+      padding-right: 10px;
+
+      .who-wrap {
+        position: static;
+        display: flex;
+        align-items: center;
+
+        input {
+          width: 100%;
+          padding-right: 60px;
+        }
+
+        .search-btn {
+          position: absolute;
+          right: 8px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 40px;
+          height: 40px;
+          border: none;
+          border-radius: 50%;
+          background: $primary;
+          color: #fff;
+          font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0,0,0,.15);
+
+          i {
+            font-size: 1rem;
+            color: white;
+          }
+        }
+      }
+    }
+
+    .search-section:hover {
+      background: rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+    }
+  }
+
+  .mini-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 999px;
+    padding: 8px 16px;
+    width: fit-content;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+
+    .mini-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        height: 18px;
+        width: 18px;
+        opacity: 0.9;
+      }
+
+      span {
+        font-size: 0.95rem;
+        color: $text;
+      }
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      background: $muted;
+      border-radius: 50%;
+    }
+
+    .mini-search-btn {
+      background: $primary;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+  }
+ 
+  &.scrolled {
+    .search-bar {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    .navbar-icon {
+      opacity: 0;
+      transform: translateY(-5px);
+      pointer-events: none;
+    }
+
+    .mini-search-bar {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.flatpickr-calendar {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: $primary !important;
+  border-color: $primary !important;
+  color: #fff !important;
+}
+
+.flatpickr-day:hover {
+  background: rgba(255, 56, 92, 0.15) !important;
 }
