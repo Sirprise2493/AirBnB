@@ -4,15 +4,16 @@ $text:    #222;
 $muted:   #717171;
 
 .navbar {
+  --s: 1;
   background: #fff;
   border-bottom: 1px solid $border;
-  padding: 16px 32px;
+  padding: calc(16px * var(--s)) 32px;
   display: flex;
   justify-content: center;
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, padding 0.25s ease;
 
   .navbar-container {
     width: 100%;
@@ -44,10 +45,10 @@ $muted:   #717171;
     transition: opacity 0.4s ease, transform 0.4s ease;
 
     img {
-      height: 42px;
+      height: calc(42px * var(--s));
       width: auto;
       opacity: 1;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease, height 0.25s ease;
 
       &:hover {
         opacity: 1;
@@ -100,7 +101,7 @@ $muted:   #717171;
   .search-bar {
     margin: 0 auto;
     width: 900px;
-    height: 56px;
+    height: calc(56px * var(--s));
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -110,7 +111,7 @@ $muted:   #717171;
     box-shadow: 0 1px 4px rgba(0,0,0,.08);
     overflow: hidden;
     position: relative;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease, height 0.25s ease;
 
     .search-section {
       flex: 0 1 20%;
@@ -282,6 +283,7 @@ $muted:   #717171;
   }
 
   &.scrolled {
+    --s: 0.6;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
