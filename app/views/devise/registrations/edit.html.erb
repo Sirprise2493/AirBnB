@@ -1,26 +1,44 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="devise-edit-page">
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :first_name, required: false %>
-    <%= f.input :last_name,  required: false %>
-    <%= f.input :email, required: true %>
+    <div class="form-inputs">
+      <%= f.input :first_name, required: false %>
+      <%= f.input :last_name,  required: false %>
+      <%= f.input :email, required: true %>
 
-    <%# Passwortfelder optional anzeigen, je nach UX-Präferenz %>
-    <%= f.input :password, hint: "leave empty when unchanged" %>
-    <%= f.input :password_confirmation %>
-    <%= f.input :current_password, hint: "needed to confirm changes" %>
+      <div class="mb-3">
+        <% if resource.photo.attached? %>
+          <%= image_tag resource.photo.variant(resize_to_fill: [120, 120]), class: "avatar-preview" %><br>
+          <small>Current profile photo</small>
+        <% else %>
+          <%= image_tag "pngtree-user-avatar-placeholder-black-png-image_3918427.jpg", class: "avatar-preview" %><br>
+          <small>No profile photo yet</small>
+        <% end %>
+      </div>
+
+      <%= f.input :photo, as: :file, label: (resource.photo.attached? ? "Change profile photo" : "Upload profile photo") %>
+
+      <%= f.input :password, hint: "leave empty when unchanged" %>
+      <%= f.input :password_confirmation %>
+      <%= f.input :current_password, hint: "needed to confirm changes" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Update" %>
+    </div>
+  <% end %>
+
+  <h3>Cancel my account</h3>
+  <div class="cancel-section">
+    Unhappy? 
+    <%= button_to "Cancel my account", registration_path(resource_name),
+          data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" },
+          method: :delete,
+          class: "btn btn-danger" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+  <%= link_to "Back", :back %>
+</div>
