@@ -15,13 +15,15 @@
 
 html, body {
   height: 100%;
-  display: flex;
-  flex-direction: column;
   margin: 0;
 }
 
-body > main,
-body > .container,
-body > .wrapper {
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper main {
   flex: 1;
 }

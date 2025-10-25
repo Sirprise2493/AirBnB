@@ -12,7 +12,7 @@ $muted:   #717171;
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
 
   .navbar-container {
     width: 100%;
@@ -263,10 +263,29 @@ $muted:   #717171;
       justify-content: center;
       margin-left: 6px;
       cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,.12);
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+    }
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.02);
+      box-shadow: 0 4px 10px rgba(0,0,0,.12);
     }
   }
- 
+
   &.scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
     .search-bar {
       opacity: 0;
       transform: translateY(-10px);
