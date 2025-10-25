@@ -1,0 +1,46 @@
+<section class="listing-reviews" id="reviews">
+  <div class="head">
+    <div class="score">
+      <span class="number"><%= @avg_rate %></span>
+      <span class="star">★</span>
+    </div>
+    <p class="subtitle">
+      <%= pluralize(@reviews.size, "review") %> for “<%= @listing.title %>”
+    </p>
+
+    <div class="avg-stars" aria-label="Average rating <%= @avg_rate %> out of 5">
+      <% filled = @avg_rate.floor %>
+      <% 1.upto(5) do |i| %>
+        <span class="star <%= i <= filled ? 'filled' : 'empty' %>">★</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid">
+    <% @reviews.each do |review| %>
+      <article class="card">
+        <header class="card-head">
+          <% if review.user&.photo.present? %>
+            <%= cl_image_tag review.user.photo.key,
+                class: "avatar", width: 48, height: 48, crop: :thumb, gravity: :face %>
+          <% else %>
+            <div class="avatar placeholder" aria-hidden="true"></div>
+          <% end %>
+
+          <div class="who">
+            <div class="name"><%= [review.user&.first_name, review.user&.last_name].compact.join(" ") %></div>
+            <div class="meta"><%= relative_time_for(review.created_at) %></div>
+          </div>
+        </header>
+
+        <div class="stars" aria-label="Rating: <%= review.rating %> out of 5">
+          <% 1.upto(5) do |i| %>
+            <span class="star <%= i <= review.rating.to_i ? 'filled' : 'empty' %>">★</span>
+          <% end %>
+        </div>
+
+        <p class="content"><%= simple_format(h(review.content)) %></p>
+      </article>
+    <% end %>
+  </div>
+</section>

@@ -29,3 +29,14 @@
 
 en:
   hello: "Hello world"
+  time:
+    just_now: "just now"
+    x_minutes_ago:
+      one: "1 minute ago"
+      other: "%{count} minutes ago"
+    x_hours_ago:
+      one: "1 hour ago"
+      other: "%{count} hours ago"
+    x_days_ago:
+      one: "1 day ago"
+      other: "%{count} days ago"

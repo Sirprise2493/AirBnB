@@ -9,5 +9,8 @@ class ListingsController < ApplicationController
   end
 
   def show
+    @listing = Listing.includes(reviews: :user).find(params[:id])
+    @reviews = @listing.reviews.order(rating: :desc)
+    @avg_rate = (@reviews.average(:rating) || 0).to_f.round(2)
   end
 end
