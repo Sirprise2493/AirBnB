@@ -22,7 +22,12 @@
     <form class="search-bar" role="search">
       <div class="search-section where">
         <label>Where</label>
-        <input type="text" placeholder="Search destinations">
+        <input type="text"
+               placeholder="Search destinations"
+               data-navbar-target="whereInput"
+               data-action="focus->navbar#onWhereFocus input->navbar#onWhereInput keydown->navbar#onWhereKeydown"
+               autocomplete="off">
+        <div class="suggestions" data-navbar-target="suggestions" hidden></div>
       </div>
 
       <div class="search-section">
@@ -40,7 +45,8 @@
         <div class="who-wrap">
           <input type="text" placeholder="Add guests">
           <button class="search-btn" type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                 class="bi bi-search" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0
               1.415-1.414l-3.85-3.85zm-5.242 0a5 5 0 1 1
               0-10 5 5 0 0 1 0 10z"/>
@@ -60,7 +66,8 @@
       <span class="dot"></span>
       <span>Add guests</span>
       <button class="mini-search-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0
           1.415-1.414l-3.85-3.85zm-5.242 0a5 5 0 1 1
           0-10 5 5 0 0 1 0 10z"/>
