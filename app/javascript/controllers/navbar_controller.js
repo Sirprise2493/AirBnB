@@ -26,14 +26,20 @@ export default class extends Controller {
     // Bind methods
     this.handleScroll = this.handleScroll.bind(this)
     this.handleDocumentClick = this.handleDocumentClick.bind(this)
+    this.handleFocusIn = this.handleFocusIn.bind(this)          // NEW
     this.expandMiniSearch = this.expandMiniSearch.bind(this)
     this.onSuggestionClick = this.onSuggestionClick.bind(this)
+    this.hideSuggestions = this.hideSuggestions.bind(this)
 
     // Init listeners
     this.handleScroll()
     window.addEventListener("scroll", this.handleScroll)
     window.addEventListener("load", this.handleScroll)
     document.addEventListener("click", this.handleDocumentClick)
+
+    // 🔹 NEW: hide suggestions when focus moves to other inputs (e.g., Check in/out/Who)
+    // use capture so it runs early; focusin bubbles (unlike focus)
+    this.navbar.addEventListener("focusin", this.handleFocusIn, true)
 
     if (this.miniSearch) {
       this.miniSearch.addEventListener("click", this.expandMiniSearch)
@@ -44,6 +50,7 @@ export default class extends Controller {
     window.removeEventListener("scroll", this.handleScroll)
     window.removeEventListener("load", this.handleScroll)
     document.removeEventListener("click", this.handleDocumentClick)
+    this.navbar.removeEventListener("focusin", this.handleFocusIn, true) // NEW
 
     if (this.miniSearch) {
       this.miniSearch.removeEventListener("click", this.expandMiniSearch)
@@ -66,7 +73,8 @@ export default class extends Controller {
   // ===== Outside click detection =====
   handleDocumentClick(e) {
     const clickedInsideNavbar = this.navbar.contains(e.target)
-    const clickedInsideSuggestions = this.hasSuggestionsTarget && this.suggestionsTarget.contains(e.target)
+    const clickedInsideSuggestions =
+      this.hasSuggestionsTarget && this.suggestionsTarget.contains(e.target)
 
     // if clicked outside navbar and suggestions → close them
     if (!clickedInsideNavbar && !clickedInsideSuggestions) {
@@ -74,6 +82,17 @@ export default class extends Controller {
       if (window.scrollY > 100) {
         this.navbar.classList.add("scrolled")
       }
+    }
+  }
+
+  // 🔹 NEW: hide suggestions when focus moves to any input other than the "Where" input
+  handleFocusIn(e) {
+    // Ignore focusing inside the suggestions dropdown itself
+    if (this.hasSuggestionsTarget && this.suggestionsTarget.contains(e.target)) return
+
+    // If the focused element is NOT the "Where" input, hide suggestions
+    if (this.hasWhereInputTarget && e.target !== this.whereInputTarget) {
+      this.hideSuggestions()
     }
   }
 
@@ -146,3 +165,4 @@ export default class extends Controller {
     }[s]))
   }
 }
+
