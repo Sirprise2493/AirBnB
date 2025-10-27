@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :bookings, only: [:new, :create, :show]
 
   # /users/:id/profile (show in controller and special path user_profile_path)
-  get "users/:id/profile", to: "users#show", as: :user_profile
+  # get "users/:id/profile", to: "users#show", as: :user_profile
+  resource :users, only: :show, as: :user_profile
 
   # Devise auth
   devise_for :users
