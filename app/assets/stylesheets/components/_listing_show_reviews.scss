@@ -16,6 +16,18 @@ $star-empty: rgb(141, 140, 140);
     text-align: center;
     margin-bottom: 28px;
 
+
+    .listing-reviews {
+      .card.card-body {
+        border-radius: 12px;
+      }
+      .btn-outline-primary {
+        border-width: 2px;
+      }
+    }
+
+
+
     .score {
       display: inline-flex;
       align-items: baseline;
