@@ -5,11 +5,12 @@ export default class extends Controller {
   static targets = ["whereInput", "suggestions"]
 
   connect() {
+    // Cache important elements from the DOM
     this.navbar = this.element
     this.miniSearch = this.navbar.querySelector(".mini-search-bar")
-    this.isExpanded = false
+    this.isExpanded = false // used to track navbar expansion state
 
-    // Local destinations (temporary static data)
+    // Static data source - used to track navbar expansion state - replace by API?
     this.destinations = [
       { name: "Paris", country: "France" },
       { name: "London", country: "United Kingdom" },
@@ -23,7 +24,8 @@ export default class extends Controller {
       { name: "Bali", country: "Indonesia" },
     ]
 
-    // Bind methods
+    // Bind all methods
+    // Important as event listeners change "this" context
     this.handleScroll = this.handleScroll.bind(this)
     this.handleDocumentClick = this.handleDocumentClick.bind(this)
     this.handleFocusIn = this.handleFocusIn.bind(this)          // NEW
@@ -31,22 +33,28 @@ export default class extends Controller {
     this.onSuggestionClick = this.onSuggestionClick.bind(this)
     this.hideSuggestions = this.hideSuggestions.bind(this)
 
-    // Init listeners
+    // Initialise listeners
+    // Run scroll state immediately (for pages not starting at top)
     this.handleScroll()
+
+    // Re-run scroll logic on scroll or page load
     window.addEventListener("scroll", this.handleScroll)
     window.addEventListener("load", this.handleScroll)
+
+    // Detects click outside the navbar
     document.addEventListener("click", this.handleDocumentClick)
 
-    // 🔹 NEW: hide suggestions when focus moves to other inputs (e.g., Check in/out/Who)
-    // use capture so it runs early; focusin bubbles (unlike focus)
+    // Detects focus changes between inputs (use capture so it fires early)
     this.navbar.addEventListener("focusin", this.handleFocusIn, true)
-
+    
+    // Mini search bar click -> expand full search
     if (this.miniSearch) {
       this.miniSearch.addEventListener("click", this.expandMiniSearch)
     }
   }
-
+  
   disconnect() {
+    // Clean up event listeners when controller disconnects
     window.removeEventListener("scroll", this.handleScroll)
     window.removeEventListener("load", this.handleScroll)
     document.removeEventListener("click", this.handleDocumentClick)
@@ -57,7 +65,8 @@ export default class extends Controller {
     }
   }
 
-  // ===== Scroll behavior =====
+  // Scroll behavior
+  // When scrolling down past 100px, navbar becomes compact
   handleScroll() {
     if (window.scrollY > 100) {
       this.navbar.classList.add("scrolled")
@@ -66,17 +75,18 @@ export default class extends Controller {
     }
   }
 
+  // Clicking the mini search bar expands the full version
   expandMiniSearch() {
     this.navbar.classList.remove("scrolled")
   }
 
-  // ===== Outside click detection =====
+  // Outside click detection
   handleDocumentClick(e) {
     const clickedInsideNavbar = this.navbar.contains(e.target)
     const clickedInsideSuggestions =
       this.hasSuggestionsTarget && this.suggestionsTarget.contains(e.target)
 
-    // if clicked outside navbar and suggestions → close them
+    // if user clicks outside navbar and suggestions → close them
     if (!clickedInsideNavbar && !clickedInsideSuggestions) {
       this.hideSuggestions()
       if (window.scrollY > 100) {
@@ -85,9 +95,10 @@ export default class extends Controller {
     }
   }
 
-  // 🔹 NEW: hide suggestions when focus moves to any input other than the "Where" input
+  // Focus management
+  // Hides suggestions when switching from "Where" input to another field
   handleFocusIn(e) {
-    // Ignore focusing inside the suggestions dropdown itself
+    // If focus is inside suggestions, don't hide (lets user click items)
     if (this.hasSuggestionsTarget && this.suggestionsTarget.contains(e.target)) return
 
     // If the focused element is NOT the "Where" input, hide suggestions
@@ -96,39 +107,48 @@ export default class extends Controller {
     }
   }
 
-  // ===== Suggestions logic =====
+  // Suggestions logic
+  // When the "Where" input is focused, show suggestions
   onWhereFocus() {
     const query = this.whereInputTarget.value.trim().toLowerCase()
     this.showSuggestions(query)
   }
 
+  // When user types in "Where", filter destination list
   onWhereInput() {
     const query = this.whereInputTarget.value.trim().toLowerCase()
     this.showSuggestions(query)
   }
-
+  
+  // When pressing Escape key, hide the dropdown
   onWhereKeydown(e) {
     if (e.key === "Escape") {
       this.hideSuggestions()
     }
   }
 
+  // Render & display suggestion list
   showSuggestions(query) {
     let matches
+
+    // If no text -> show top 5 destinations as defaults
     if (!query) {
       matches = this.destinations.slice(0, 5)
     } else {
+      // Only include destinations that start with entered letters
       matches = this.destinations.filter(d =>
         d.name.toLowerCase().startsWith(query)
       )
     }
-
+    
+    // If no matches, show an empty message
     if (matches.length === 0) {
       this.suggestionsTarget.innerHTML = `<div class="empty">No results found</div>`
       this.suggestionsTarget.hidden = false
       return
     }
-
+    
+    // Otherwise, display the matches in the dropdown
     this.suggestionsTarget.innerHTML = matches.map(d => `
       <div class="suggestion-item" data-name="${this.escape(d.name)}">
         <span class="icon">📍</span>
@@ -138,14 +158,17 @@ export default class extends Controller {
         </div>
       </div>
     `).join("")
-
+    
+    // Make the dropdown visible
     this.suggestionsTarget.hidden = false
-
+    
+    // Add event listeners to each suggestion item
     this.suggestionsTarget.querySelectorAll(".suggestion-item").forEach(item => {
       item.addEventListener("mousedown", this.onSuggestionClick)
     })
   }
 
+  // When user clicks on a suggestion -> fill the input and close dropdown
   onSuggestionClick(e) {
     e.preventDefault()
     const name = e.currentTarget.dataset.name
@@ -153,12 +176,14 @@ export default class extends Controller {
     this.hideSuggestions()
   }
 
+  // Hide dropdown list
   hideSuggestions() {
     if (this.hasSuggestionsTarget) {
       this.suggestionsTarget.hidden = true
     }
   }
 
+  // Safely escape text for HTML rendering
   escape(str) {
     return String(str).replace(/[&<>"']/g, s => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
