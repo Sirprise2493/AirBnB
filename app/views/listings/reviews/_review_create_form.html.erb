@@ -1,0 +1,26 @@
+<%= simple_form_for([listing, review],
+      html: { class: "card card-body shadow-sm border-0" }) do |f| %>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-4">
+      <%= f.input :rating, as: :select,
+                  collection: 1..5, include_blank: "Rating (1–5)",
+                  input_html: { class: "form-select" },
+                  label: "Rating" %>
+    </div>
+
+    <div class="col-12">
+      <%= f.input :content,
+                  as: :text,
+                  label: "Your review",
+                  input_html: { rows: 4, placeholder: "What did you like (or not)?" } %>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <%= f.button :submit, "Safe review", class: "btn btn-primary" %>
+      <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#new-review" role="button">
+        Cancel
+      </a>
+    </div>
+  </div>
+<% end %>
