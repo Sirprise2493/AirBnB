@@ -75,6 +75,7 @@ end
 
 # Photos in the cloud
 gem "cloudinary"
+gem "activestorage-cloudinary-service"
 
 
 #Devise

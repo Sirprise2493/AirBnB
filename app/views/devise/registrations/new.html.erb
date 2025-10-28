@@ -9,11 +9,17 @@
       <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
       <%= f.input :password, required: true, hint: ("at least #{@minimum_password_length} characters" if @minimum_password_length) %>
       <%= f.input :password_confirmation, required: true %>
+
+      <div class="mb-3 text-center">
+        <%= image_tag "847969.png", class: "avatar-preview" %><br>
+        <small>Profile photo (optional)</small>
+      </div>
+
       <%= f.input :photo, as: :file, label: "Upload your profile photo" %>
     </div>
 
-    <div class="form-actions btn btn-primary">
-      <%= f.button :submit, "Sign up" %>
+    <div class="form-actions">
+      <%= f.button :submit, "Sign up", class: "btn" %>
     </div>
   <% end %>
 
