@@ -1,0 +1,130 @@
+// Listings page styles
+body {
+  background: #F7F7F7;
+  font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.listings-title {
+  color: #FF5A5F; // Airbnb pink
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  margin-bottom: 2rem;
+  margin-left: .5rem;
+}
+
+.btn-create {
+  background: #FF5A5F;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75em 2em;
+  border: 0;
+  border-radius: 8px;
+  margin-bottom: 2em;
+  margin-left: .5rem;
+  text-decoration: none;
+  box-shadow: 0 1px 2px #0002;
+  transition: background .13s;
+  &:hover {
+    background: #d60436;
+  }
+}
+
+.listings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.2rem 1.5rem;
+  padding: 0 1rem 2rem 1rem;
+}
+
+.listing-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(72, 72, 72, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.18s;
+  &:hover {
+    box-shadow: 0 4px 24px rgba(72,72,72,0.15);
+  }
+}
+
+.listing-photos {
+  width: 100%;
+  height: 220px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  img.listing-photo {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    flex-shrink: 0;
+    margin-right: 8px;
+    background: #ddd;
+    border: none;
+  }
+}
+
+.listing-card-content {
+  padding: 1.4rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.listing-title {
+  color: #222;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 .5em 0;
+  text-decoration: none;
+}
+
+.listing-link {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    color: #FF5A5F;
+    text-decoration: underline;
+  }
+}
+
+.listing-desc {
+  color: #82888A;
+  font-size: .98rem;
+  margin-bottom: .6em;
+  min-height: 2.2em;
+}
+
+.listing-details {
+  color: #484848;
+  font-size: 1.01rem;
+  margin: .2em 0;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.listing-host {
+  color: #FF5A5F;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.no-listings {
+  text-align: center;
+  color: #FF5A5F;
+  font-weight: 700;
+  margin-top: 2em;
+  padding: 1.5em;
+  background: #fff0f0;
+  border-radius: 16px;
+}

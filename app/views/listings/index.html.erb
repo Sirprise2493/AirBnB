@@ -1,2 +1,33 @@
-<h1>Listings#index</h1>
-<p>Find me in app/views/listings/index.html.erb</p>
+<h1 class="listings-title">Listings</h1>
+
+<%= link_to "New Listing", new_listing_path, class: "btn-create" %>
+
+<% if @listings.any? %>
+  <div class="listings-container">
+    <% @listings.each do |listing| %>
+      <div class="listing-card">
+        <% if listing.photos.attached? %>
+          <div class="listing-photos">
+            <% listing.photos.each do |photo| %>
+              <%= image_tag photo.variant(resize_to_fill: [350, 220]), class: "listing-photo" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="listing-card-content">
+          <h2 class="listing-title">
+            <%= link_to listing.title, listing_path(listing), class: "listing-link" %>
+          </h2>
+          <p class="listing-desc"><%= listing.description %></p>
+          <div class="listing-details">
+            <span><%= listing.address %></span>
+            <span>€<%= listing.price_per_night %>/night</span>
+            <span>👥 <%= listing.max_guests %> guests</span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="no-listings">No listings found.</p>
+<% end %>
