@@ -12,16 +12,46 @@ export default class extends Controller {
 
     // Static data source - used to track navbar expansion state - replace by API?
     this.destinations = [
+      // Europe
       { name: "Paris", country: "France" },
       { name: "London", country: "United Kingdom" },
-      { name: "New York", country: "United States" },
-      { name: "Tokyo", country: "Japan" },
       { name: "Barcelona", country: "Spain" },
       { name: "Lisbon", country: "Portugal" },
       { name: "Berlin", country: "Germany" },
       { name: "Rome", country: "Italy" },
-      { name: "Sydney", country: "Australia" },
+      { name: "Amsterdam", country: "Netherlands" },
+      { name: "Prague", country: "Czech Republic" },
+      { name: "Vienna", country: "Austria" },
+      { name: "Budapest", country: "Hungary" },
+      { name: "Athens", country: "Greece" },
+      { name: "Edinburgh", country: "Scotland" },
+      { name: "Copenhagen", country: "Denmark" },
+
+      // Americas
+      { name: "New York", country: "United States" },
+      { name: "Los Angeles", country: "United States" },
+      { name: "Miami", country: "United States" },
+      { name: "Toronto", country: "Canada" },
+      { name: "Vancouver", country: "Canada" },
+      { name: "Rio de Janeiro", country: "Brazil" },
+      { name: "Buenos Aires", country: "Argentina" },
+      { name: "Mexico City", country: "Mexico" },
+      { name: "Havana", country: "Cuba" },
+
+      // Asia-Pacific
+      { name: "Tokyo", country: "Japan" },
+      { name: "Seoul", country: "South Korea" },
+      { name: "Bangkok", country: "Thailand" },
+      { name: "Singapore", country: "Singapore" },
       { name: "Bali", country: "Indonesia" },
+      { name: "Sydney", country: "Australia" },
+      { name: "Auckland", country: "New Zealand" },
+      { name: "Hong Kong", country: "China" },
+
+      // Middle East & Africa
+      { name: "Dubai", country: "United Arab Emirates" },
+      { name: "Cape Town", country: "South Africa" },
+      { name: "Marrakesh", country: "Morocco" }
     ]
 
     // Bind all methods
