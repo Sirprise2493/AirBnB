@@ -1,6 +1,5 @@
-<div class="devise-form-page">
+<div class="devise-edit-page">
   <h2>Sign up</h2>
-
   <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= f.error_notification %>
 
@@ -10,15 +9,19 @@
       <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
       <%= f.input :password, required: true, hint: ("at least #{@minimum_password_length} characters" if @minimum_password_length) %>
       <%= f.input :password_confirmation, required: true %>
+
+      <div class="mb-3 text-center">
+        <%= image_tag "847969.png", class: "avatar-preview" %><br>
+        <small>Profile photo (optional)</small>
+      </div>
+
       <%= f.input :photo, as: :file, label: "Upload your profile photo" %>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, "Sign up" %>
+      <%= f.button :submit, "Sign up", class: "btn" %>
     </div>
   <% end %>
 
-  <div class="links">
-    <%= render "devise/shared/links" %>
-  </div>
+  <%= render "devise/shared/links" %>
 </div>

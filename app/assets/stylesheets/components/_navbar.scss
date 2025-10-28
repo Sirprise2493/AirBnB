@@ -1,19 +1,23 @@
-$primary: #ff385c;
-$border:  #e5e5e5;
-$text:    #222;
-$muted:   #717171;
+// Color variables
+$primary: #ff385c; // Airbnb pink accent colour
+$border:  #e5e5e5; // Light grey border
+$text:    #222; // Default dark text
+$muted:   #717171; // Muted grey for secondary text
 
+// Main navbar wrapper
 .navbar {
+  --s: 1; // Scale variable (used to shrink elements smoothly when scrolling)
   background: #fff;
   border-bottom: 1px solid $border;
-  padding: 16px 32px;
+  padding: calc(16px * var(--s)) 32px; // Dynamic padding that scales with --s
   display: flex;
   justify-content: center;
-  position: sticky;
+  position: sticky; // Stays fixed at top when scrolling
   top: 0;
-  z-index: 1000;
-  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  z-index: 1000; // Keep above all other content
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, padding 0.25s ease;
 
+  // Inner container for layout alignment
   .navbar-container {
     width: 100%;
     max-width: 1200px;
@@ -23,6 +27,7 @@ $muted:   #717171;
     position: relative;
   }
 
+  // Top row of navbar (logo + links + icons)
   .navbar-top {
     display: flex;
     align-items: center;
@@ -30,10 +35,12 @@ $muted:   #717171;
     position: relative;
   }
 
+  // Airbnb logo
   .navbar-left img {
     height: 34px;
   }
 
+  // Centre icon + catchphrase section
   .navbar-icon {
     display: flex;
     align-items: center;
@@ -43,11 +50,12 @@ $muted:   #717171;
     position: relative;
     transition: opacity 0.4s ease, transform 0.4s ease;
 
+    // Themed icon image
     img {
-      height: 42px;
+      height: calc(42px * var(--s));
       width: auto;
       opacity: 1;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease, height 0.25s ease;
 
       &:hover {
         opacity: 1;
@@ -55,6 +63,7 @@ $muted:   #717171;
       }
     }
 
+    // Text next to icon
     .catchphrase {
       font-size: 1.05rem;
       font-weight: 500;
@@ -66,6 +75,7 @@ $muted:   #717171;
     }
   }
 
+  // Right section: "log in", "Sign up" etc.
   .navbar-right {
     display: flex;
     align-items: center;
@@ -79,9 +89,10 @@ $muted:   #717171;
       transition: color 0.2s ease;
 
       &:hover {
-        color: $primary;
+        color: $primary; // Pink hover colour
       }
 
+      // SIgnup button style (pill shaped)
       &.signup {
         padding: 6px 14px;
         border: 1px solid $primary;
@@ -97,10 +108,11 @@ $muted:   #717171;
     }
   }
 
+  // Full search bar (visible when not scrolled)
   .search-bar {
     margin: 0 auto;
     width: 900px;
-    height: 56px;
+    height: calc(56px * var(--s)); // Shrinks with scroll
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -108,10 +120,11 @@ $muted:   #717171;
     border: 1px solid $border;
     border-radius: 999px;
     box-shadow: 0 1px 4px rgba(0,0,0,.08);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease, height 0.25s ease;
 
+    // Each input section (Where, Check in, Check out, Who)
     .search-section {
       flex: 0 1 20%;
       padding: 0 16px;
@@ -120,7 +133,7 @@ $muted:   #717171;
       justify-content: center;
       border-right: 1px solid $border;
 
-      &:last-child { border-right: 0; }
+      &:last-child { border-right: 0; } // Remove divider on last section
 
       label {
         font-size: 0.75rem;
@@ -144,6 +157,7 @@ $muted:   #717171;
         }
       }
 
+      // Flatpickr date inputs (calendar widget)
       .flatpickr-input[readonly] {
         color: $muted !important;
         font-size: 0.9rem !important;
@@ -160,8 +174,10 @@ $muted:   #717171;
       }
     }
 
+    // Wider "Where" input
     .where { flex: 0 1 38%; }
 
+    // "Who" input with search button
     .who {
       flex: 0 1 22%;
       padding-right: 10px;
@@ -176,6 +192,7 @@ $muted:   #717171;
           padding-right: 60px;
         }
 
+        // Pink circular search button
         .search-btn {
           position: absolute;
           right: 8px;
@@ -202,12 +219,75 @@ $muted:   #717171;
       }
     }
 
+    // Hover feedback for any search section
     .search-section:hover {
       background: rgba(0, 0, 0, 0.03);
       cursor: pointer;
     }
+
+    // Dropdown suggestions (under "Where")
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid $border;
+      border-radius: 16px;
+      margin-top: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 2000;
+      padding: 6px 0;
+
+      // Each clickable suggestion row
+      .suggestion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.03);
+        }
+
+        .icon {
+          font-size: 1rem;
+          color: $primary;
+        }
+
+        .text {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+
+          .primary {
+            font-size: 0.95rem;
+            color: $text;
+            font-weight: 500;
+          }
+
+          .secondary {
+            font-size: 0.8rem;
+            color: $muted;
+          }
+        }
+      }
+
+      // Message shown when no results match
+      .empty {
+        text-align: center;
+        color: $muted;
+        font-size: 0.9rem;
+        padding: 12px;
+      }
+    }
   }
 
+  // Mini search bar (appears when navbar is scrolled)
   .mini-search-bar {
     display: flex;
     align-items: center;
@@ -223,10 +303,11 @@ $muted:   #717171;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; // Hidden by default
+    pointer-events: none; // Inactive until scrolled
     transition: all 0.4s ease;
 
+    // Left side: house icon + "Anywhere" text)
     .mini-left {
       display: flex;
       align-items: center;
@@ -244,6 +325,7 @@ $muted:   #717171;
       }
     }
 
+    // Small dot between "Anywhere"/"Any week"
     .dot {
       width: 4px;
       height: 4px;
@@ -251,6 +333,7 @@ $muted:   #717171;
       border-radius: 50%;
     }
 
+    // Pink circular button on right (magnifying glass)
     .mini-search-btn {
       background: $primary;
       border: none;
@@ -281,23 +364,28 @@ $muted:   #717171;
     }
   }
 
+  // Scrolled state (triggered by JS handleScroll)
   &.scrolled {
+    --s: 0.4; // Shrinks elements proportionally)
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 
+    // Hide large search bar when scrolled
     .search-bar {
       opacity: 0;
       transform: translateY(-10px);
       pointer-events: none;
     }
 
+    // Hide logo & catchphrase
     .navbar-icon {
       opacity: 0;
       transform: translateY(-5px);
       pointer-events: none;
     }
 
+    // Show mini search bar in centre
     .mini-search-bar {
       opacity: 1;
       pointer-events: auto;
@@ -306,12 +394,14 @@ $muted:   #717171;
   }
 }
 
+// Flatpickr datepicker theme tweaks
 .flatpickr-calendar {
   border-radius: 16px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   font-family: 'Inter', sans-serif !important;
 }
 
+// Highlight selected date range in pink
 .flatpickr-day.selected,
 .flatpickr-day.startRange,
 .flatpickr-day.endRange {
@@ -320,6 +410,7 @@ $muted:   #717171;
   color: #fff !important;
 }
 
+// Subtle hover effect for date cells
 .flatpickr-day:hover {
   background: rgba(255, 56, 92, 0.15) !important;
 }

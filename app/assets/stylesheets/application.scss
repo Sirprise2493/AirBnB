@@ -14,6 +14,8 @@
 @import "pages/index";
 @import "pages/devise_edit";
 
+@import "pages/devise_edit";
+
 html, body {
   height: 100%;
   margin: 0;
@@ -28,3 +30,7 @@ html, body {
 .page-wrapper main {
   flex: 1;
 }
+
+
+// Geocoding
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
