@@ -9,7 +9,26 @@
 
 // Your CSS partials
 @import "components/index";
+@import "components/navbar";
+@import "components/footer";
 @import "pages/index";
+
+@import "pages/devise_edit";
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper main {
+  flex: 1;
+}
 
 
 // Geocoding
