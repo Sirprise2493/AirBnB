@@ -12,6 +12,7 @@
 @import "components/navbar";
 @import "components/footer";
 @import "pages/index";
+
 @import "pages/devise_edit";
 
 html, body {
@@ -28,3 +29,7 @@ html, body {
 .page-wrapper main {
   flex: 1;
 }
+
+
+// Geocoding
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
