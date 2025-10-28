@@ -12,11 +12,13 @@
 @import "components/navbar";
 @import "components/footer";
 @import "pages/index";
+@import "pages/devise_edit";
 
 @import "components/listing_show_reviews";
-@import "components/user_show_profile_reviews"
+@import "components/user_show_profile_reviews";
 
-@import "pages/devise_edit";
+// Geocoding
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
 
 html, body {
   height: 100%;
@@ -34,5 +36,3 @@ html, body {
 }
 
 
-// Geocoding
-@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
