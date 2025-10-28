@@ -40,3 +40,22 @@
 # Ignore Mac and Linux file system files
 *.swp
 .DS_Store
+
+# --- ADD THESE LINES BELOW ---
+
+# Ignore JavaScript & Node dependencies
+/node_modules
+/yarn.lock
+/package-lock.json
+
+# Ignore frontend build artifacts
+/dist
+/coverage
+
+# Ignore development scripts
+/bin/dev
+
+# Ignore editor & IDE settings
+.vscode
+.idea
+
