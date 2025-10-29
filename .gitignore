@@ -50,3 +50,7 @@ package-lock.json
 # Ignore macOS and Linux system files
 *.swp
 .DS_Store
+
+# Ignore local bin scripts
+/bin/dev
+
