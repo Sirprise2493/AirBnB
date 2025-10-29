@@ -6,25 +6,51 @@
   <div class="listings-container">
     <% @listings.each do |listing| %>
       <div class="listing-card">
+
+        <%# --- Photo carousel (only shown if photos are attached) --- %>
         <% if listing.photos.attached? %>
-          <div class="listing-photos">
+          <div class="listing-photos" data-controller="carousel">
             <% listing.photos.each do |photo| %>
-              <%= image_tag photo.variant(resize_to_fill: [350, 220]), class: "listing-photo" %>
+              <%= image_tag url_for(photo),
+                  class: "listing-photo hidden",
+                  data: { carousel_target: "image" } %>
+            <% end %>
+
+            <%# Show navigation buttons only if more than 1 photo --- %>
+            <% if listing.photos.count > 1 %>
+              <button
+                type="button"
+                data-action="click->carousel#previous"
+                class="carousel-btn left"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                data-action="click->carousel#next"
+                class="carousel-btn right"
+              >
+                ›
+              </button>
             <% end %>
           </div>
         <% end %>
 
+        <%# --- Listing details section --- %>
         <div class="listing-card-content">
           <h2 class="listing-title">
             <%= link_to listing.title, listing_path(listing), class: "listing-link" %>
           </h2>
+
           <p class="listing-desc"><%= listing.description %></p>
+
           <div class="listing-details">
             <span><%= listing.address %></span>
             <span>€<%= listing.price_per_night %>/night</span>
             <span>👥 <%= listing.max_guests %> guests</span>
           </div>
         </div>
+
       </div>
     <% end %>
   </div>
