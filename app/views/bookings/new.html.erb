@@ -1,0 +1,306 @@
+<main class="shell page">
+  <h1 class="preset1 ink b">Request to book</h1>
+
+  <%= form_with model: @booking, local: true do |f| %>
+    <!-- estados -->
+    <input id="step1" class="state" type="radio" name="step" checked>
+    <input id="step2" class="state" type="radio" name="step">
+    <input id="step3" class="state" type="radio" name="step">
+
+    <!-- hidden fields p/ datas (para enviar ao Rails) -->
+    <%= f.hidden_field :start_date, id: "start-date-field", value: @booking.start_date %>
+    <%= f.hidden_field :end_date,   id: "end-date-field",   value: @booking.end_date %>
+
+    <section class="grid">
+      <div class="left">
+        <!-- step 1 -->
+        <div class="step card">
+          <label for="step1" class="step-head preset2 ink b">
+            <span>1. Choose when to pay</span>
+            <span class="action preset3 muted swap change1" data-for="step1" style="display: none;">Change</span>
+          </label>
+
+          <div class="step-body body-1">
+            <label class="option">
+              <div class="opt-body">
+                <div class="preset2 ink b">Pay now</div>
+                <div class="preset3 muted">Full payment, no extra fees.</div>
+              </div>
+              <%= f.radio_button :payment_option, "now", checked: true %>
+            </label>
+
+            <div class="line"></div>
+            
+            <label class="option">
+              <div class="opt-body">
+                <div class="preset2 ink b">Pay 0€ now</div>
+                <div class="preset3 muted">Charged later. More info</div>
+              </div>
+              <%= f.radio_button :payment_option, "later" %>
+            </label>
+            
+            <div class="line"></div>
+
+            <label class="option">
+              <div class="opt-body">
+                <div class="preset2 ink b">Pay in 3 payments with Klarna</div>
+                <div class="preset3 muted">3 payments (0% APR). More info</div>
+              </div>
+              <%= f.radio_button :payment_option, "klarna" %>
+            </label>
+            
+            <div class="line"></div>
+            
+            <div class="container-btn">
+              <label for="step2" class="btn preset2 white b next">Next</label>
+            </div>
+          </div>
+        </div>
+
+<div class="step card">
+  <label for="step2" class="step-head preset2 ink b">
+    <span>2. Add a payment method</span>
+    <span class="action preset3 muted swap" data-for="step2">Change</span>
+  </label>
+
+  <div class="step-body body-2">
+    <div class="radio-row preset3 ink">
+      <div class="row1">
+        <%= image_tag "mastercard.png", alt: "card icon", class: "icon4" %>
+        <div class="column">
+          <div class="row-title preset3 ink">Credit or debit card</div>
+          <div class="logos">
+            <span class="logo visa"><%= image_tag "logotipo-visa.png", alt: "visa icon", class: "icon3" %></span>
+            <span class="logo mc"><%= image_tag "cartao.png", alt: "mastercard icon", class: "icon3" %></span>
+            <span class="logo ae"><%= image_tag "amex.png", alt: "amex icon", class: "icon3" %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form">
+      <%= f.text_field :card_number, placeholder: "Card number", class: "input preset3 ink" %>
+      <div class="twocol">
+        <%= f.text_field :expiration, placeholder: "Expiration", class: "input preset3 ink" %>
+        <%= f.text_field :cvv, placeholder: "CVV", class: "input preset3 ink" %>
+      </div>
+      <%= f.text_field :postcode, placeholder: "Postcode", class: "input preset3 ink" %>
+      <%= f.text_field :country, placeholder: "Country/region", class: "input preset3 ink" %>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="radio-row preset3 ink">
+      <div class="row1">
+        <%= image_tag "paypal.png", alt: "paypal icon", class: "icon2 pp" %>
+        <span>PayPal</span>
+      </div>
+      <%= f.radio_button :payment_method, "paypal" %>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="radio-row preset3 ink">
+      <div class="row1">
+        <%= image_tag "pagamento-do-google.png", alt: "google pay icon", class: "icon2 gp" %>
+        <span> Google Pay</span>
+      </div>
+      <%= f.radio_button :payment_method, "google_pay" %>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="container-btn">
+      <label for="step3" class="btn preset2 white b next">Next</label>
+    </div>
+  </div>
+</div>
+
+        <!-- step 3 -->
+        <div class="step card">
+          <label for="step3" class="step-head preset2 ink b">
+            <span>3. Review your request</span>
+          </label>
+
+          <div class="step-body body-3">
+            <div class="addons">
+              <div class="addon">
+                <div class="row1">
+                  <div class="column">
+                    <div class="preset2 ink b">Add travel insurance?</div>
+                    <div class="preset3 muted">Yes, add for 0.00€ · Only available when booking.</div>
+                  </div>
+                  <a href="#" class="chip1 preset3 ink">Add</a>
+                </div>
+                <div class="line"></div>
+                <div class="preset3 muted">Get up to 100% refund if you cancel for covered reasons.</div>
+              </div>
+              
+              <div class="addon">
+                <div class="row1">
+                  <div class="column">
+                    <div class="preset2 ink b">Support climate protection</div>
+                    <div class="preset3 muted med">Contribute 0.00€ to restoration projects.</div>
+                  </div>
+                  <a href="#" class="chip1 preset3 ink">Add</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="agree preset3 muted">By selecting the button, I agree to the booking terms.</div>
+            <%= f.submit "Confirm reservation", class: "btn1 primary preset2 white b" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- card right -->
+      <aside class="right">
+        <div class="summary card">
+          <div class="sum-top">
+            <% if @listing&.photos&.attached? %>
+              <%= image_tag @listing.photos.first, class: "thumb" %>
+            <% else %>
+              <img src="/assets/p1.png" alt="photo" class="thumb">
+            <% end %>
+
+            <div class="column">
+              <div class="row1">
+                <img src="/assets/googletranslate_translate_3280.png" alt="translate icon" class="icon1">
+                <div class="preset2 ink b"><%= @listing.title %></div>
+              </div>
+
+              <% average_rating = @listing.reviews.any? ? @listing.reviews.average(:rating).round(2) : 0 %>
+              <div class="preset2 muted"><%= average_rating %> · <%= @listing.reviews.count %></div>
+            </div>
+          </div>
+
+          <div class="line"></div>
+
+          <div class="kv">
+            <div class="preset2 muted">Free cancellation</div>
+            <div class="preset3 ink t-right">
+              <a href="#" class="link">Full policy</a>
+            </div>
+          </div>
+
+          <div class="kv">
+            <div>
+              <div class="preset3 muted">Dates</div>
+              <div class="preset5 ink js-dates">
+                <%= @booking.start_date.strftime("%d %b %Y") %> – <%= @booking.end_date.strftime("%d %b %Y") %>
+              </div>
+            </div>
+            <a href="#" id="open-calendar" class="chip preset3 ink">Change</a>
+          </div>
+
+          <div class="kv" id="kv-guests">
+            <div>
+              <div class="preset3 muted">Guests</div>
+              <div class="preset5 ink" id="guests-display"><%= (@booking.try(:guests) || 2) %> adults</div>
+            </div>
+            <a href="#" id="open-guests" class="chip preset3 ink">Change</a>
+          </div>
+
+          <div class="line"></div>
+
+          <!-- Price details: com IDs e data-nightly para cálculo no front -->
+          <div class="rows preset3 ink" id="price-rows" data-nightly="<%= @listing&.price_per_night || 0 %>">
+            <% nightly = @listing&.price_per_night %>
+            <% nights  = (@booking&.start_date && @booking&.end_date) ? (@booking.end_date - @booking.start_date).to_i : nil %>
+            <% subtotal = (nightly && nights && nights > 0) ? nightly * nights : nil %>
+            <% computed_total = subtotal %>
+            <% total = @booking.try(:total) || @total || computed_total %>
+
+            <div class="rowline">
+              <span id="row-nights">
+                <% if nightly && nights %>
+                  <%= nights %> <%= nights == 1 ? 'night' : 'nights' %> × <%= '%.2f' % nightly %>€
+                <% else %>
+                  Price details
+                <% end %>
+              </span>
+              <span id="row-subtotal">
+                <% if subtotal %>
+                  <%= '%.2f' % subtotal %>€
+                <% else %>
+                  vallue nulla
+                <% end %>
+              </span>
+            </div>
+
+            <div class="rowline">
+              <span>Taxes</span><span></span>
+            </div>
+
+            <div class="rowline total b">
+              <span>Total EUR</span>
+              <span id="row-total">
+                <% if total %>
+                  <%= '%.2f' % total %>€
+                <% else %>
+                  Value null
+                <% end %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rare preset3 muted">
+          <img src="/assets/diamond_115242.png" alt="diamond icon" class="diamont">
+          <div class="column">
+            <div class="preset2 ink b">This is a rare find.</div>
+            <% host_name = @listing.user ? @listing.user.first_name : "The host" %>
+            <div><%= host_name %>’s place is usually booked.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  <% end %> <!-- fecha o form_with -->
+
+  <!-- Calendar (window) -->
+  <div id="calendar-modal" class="modal hidden">
+    <div class="modal-content card">
+      <div class="modal-header preset2 ink b">
+        Select your dates
+        <button id="close-calendar" class="close">×</button>
+      </div>
+
+      <div class="form preset3 ink">
+        <label>Start date</label>
+        <input type="date" id="start-date" value="<%= @booking.start_date %>">
+
+        <label>End date</label>
+        <input type="date" id="end-date" value="<%= @booking.end_date %>">
+
+        <button id="save-dates" class="btn preset2 white b">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guests (window) -->
+  <div id="guests-modal" class="modal hidden">
+    <div class="modal-content card">
+      <div class="modal-header preset2 ink b">
+        Select guests
+        <button id="close-guests" class="close" aria-label="Close">×</button>
+      </div>
+
+      <div class="form preset3 ink">
+        <label for="guests-input">Adults</label>
+
+        <div class="quantity">
+          <button class="qty-btn" id="minus" type="button" aria-label="Decrease">–</button>
+          <input id="guests-input" type="number" min="1" value="<%= (@booking.try(:guests) || 2) %>">
+          <button class="qty-btn" id="plus" type="button" aria-label="Increase">+</button>
+        </div>
+
+        <div class="preset6 muted" id="guests-hint">
+          Max <%= (@listing.try(:max_guests) || 16) %> guests
+        </div>
+
+        <button id="save-guests" class="btn preset2 white b" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+
+</main>

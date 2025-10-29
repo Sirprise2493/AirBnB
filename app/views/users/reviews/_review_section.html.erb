@@ -1,0 +1,25 @@
+<section class="user-reviews" id="user-reviews">
+  <div class="head">
+    <div class="score">
+      <span class="number"><%= avg_rate %></span>
+      <span class="star">★</span>
+    </div>
+    <p class="subtitle">
+      <%= pluralize(reviews.size, "review") %> written by
+      <strong><%= [user.first_name, user.last_name].compact.join(" ") %></strong>
+    </p>
+
+    <div class="avg-stars" aria-label="Average rating <%= avg_rate %> out of 5">
+      <% filled = avg_rate.floor %>
+      <% 1.upto(5) do |i| %>
+        <span class="star <%= i <= filled ? 'filled' : 'empty' %>">★</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid">
+    <% reviews.each do |review| %>
+      <%= render partial: "users/reviews/review_card", locals: { review: review } %>
+    <% end %>
+  </div>
+</section>

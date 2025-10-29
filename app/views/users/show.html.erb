@@ -1,0 +1,8 @@
+<h1>Users#show</h1>
+<p>Find me in app/views/users/show.html.erb</p>
+
+
+<h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
+
+<%= render partial: "users/reviews/review_section",
+           locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>

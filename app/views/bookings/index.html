@@ -1,0 +1,24 @@
+<main class="wrap main">
+  <h1 class="page-title">Trips</h1>
+
+  <% if @bookings.blank? %>
+    <p class="muted" style="margin-top:12px">No trip yet.</p>
+  <% end %>
+
+  <% @bookings.each do |b| %>
+    <article class="trip card" style="margin-top:12px; padding:14px">
+      <div class="row">
+        <div class="column">
+          <h3 class="trip-title"><%= b.listing&.title || "Listing ##{b.listing_id}" %></h3>
+          <p class="muted">
+            <%= b.start_date&.strftime("%b %d") %>–<%= b.end_date&.strftime("%d") %>
+            · <%= (b.request_status || "pending").to_s.humanize %>
+          </p>
+        </div>
+        <div class="column-D">
+          <%= link_to "Open", booking_path(b), class: "ghost" %>
+        </div>
+      </div>
+    </article>
+  <% end %>
+</main>
