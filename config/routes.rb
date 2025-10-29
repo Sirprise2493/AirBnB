@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :listings, only: [:show] do
     resources :reviews, only: [:create]
+    resources :bookings, only: [:create]
   end
 
   # /bookings/new (new), /bookings (POST) (create), /bookings/:id (show)
