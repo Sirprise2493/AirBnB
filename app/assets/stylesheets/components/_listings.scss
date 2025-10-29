@@ -1,140 +1,78 @@
-// Listings page styles
+// Page layout
 body {
-  background: #F7F7F7;
+  background: #f7f7f7;
   font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
 }
 
-.listings-title {
-  color: #FF5A5F; // Airbnb pink
-  text-align: left;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: .01em;
-  margin-bottom: 2rem;
-  margin-left: .5rem;
+// Header (title + button)
+.listings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 1rem 1.5rem;
 }
 
+.listings-title {
+  color: #ff5a5f;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+// Buttons
 .btn-create {
-  background: #FF5A5F;
+  background: #ff5a5f;
   color: #fff;
   font-weight: 600;
-  padding: 0.75em 2em;
-  border: 0;
-  border-radius: 8px;
-  margin-bottom: 2em;
-  margin-left: .5rem;
+  padding: 0.7em 1.6em;
+  border: none;
+  border-radius: 25px;
   text-decoration: none;
-  box-shadow: 0 1px 2px #0002;
-  transition: background .13s;
+  box-shadow: 0 2px 6px #0002;
+  transition: all 0.2s ease;
   &:hover {
     background: #d60436;
+    transform: translateY(-2px);
   }
 }
 
+// Listings grid
 .listings-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.2rem 1.5rem;
-  padding: 0 1rem 2rem 1rem;
+  gap: 2rem;
+  padding: 0 1.5rem 2rem;
 }
 
+// Listing card
 .listing-card {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(72, 72, 72, 0.1);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow 0.18s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   &:hover {
-    box-shadow: 0 4px 24px rgba(72,72,72,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(72, 72, 72, 0.15);
   }
 }
 
+// Image carousel
 .listing-photos {
+  position: relative;
   width: 100%;
   height: 220px;
-  background: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-x: auto;
-  img.listing-photo {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
-    object-fit: cover;
-    border-radius: 0;
-    flex-shrink: 0;
-    margin-right: 8px;
-    background: #ddd;
-    border: none;
-  }
+  overflow: hidden;
 }
 
-.listing-card-content {
-  padding: 1.4rem 1.15rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.listing-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  display: block;
 }
 
-.listing-title {
-  color: #222;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 .5em 0;
-  text-decoration: none;
-}
-
-.listing-link {
-  color: inherit;
-  text-decoration: none;
-  &:hover {
-    color: #FF5A5F;
-    text-decoration: underline;
-  }
-}
-
-.listing-desc {
-  color: #82888A;
-  font-size: .98rem;
-  margin-bottom: .6em;
-  min-height: 2.2em;
-}
-
-.listing-details {
-  color: #484848;
-  font-size: 1.01rem;
-  margin: .2em 0;
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  flex-wrap: wrap;
-}
-
-.listing-host {
-  color: #FF5A5F;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.no-listings {
-  text-align: center;
-  color: #FF5A5F;
-  font-weight: 700;
-  margin-top: 2em;
-  padding: 1.5em;
-  background: #fff0f0;
-  border-radius: 16px;
-}
-
-/* --- Carousel controls --- */
-.hidden {
-  display: none;
-}
-
-/* Carousel navigation buttons */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -144,29 +82,73 @@ body {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: none;
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
-  font-size: 1.1rem;
-  backdrop-filter: blur(2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.12s ease;
-
+  transition: background 0.15s ease, transform 0.15s ease;
   &:hover {
-    background: rgba(0, 0, 0, 0.55);
-    transform: translateY(-50%) scale(1.05);
+    background: rgba(0, 0, 0, 0.6);
+    transform: translateY(-50%) scale(1.1);
   }
-
   &.left {
     left: 10px;
   }
-
   &.right {
     right: 10px;
   }
 }
 
-.listing-photos {
-  position: relative;
+// Card content
+.listing-card-content {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
 }
+
+.listing-title {
+  color: #222;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4em;
+}
+
+.listing-link {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    color: #ff5a5f;
+    text-decoration: underline;
+  }
+}
+
+.listing-desc {
+  color: #82888a;
+  font-size: 0.95rem;
+  margin-bottom: 0.6em;
+}
+
+.listing-details {
+  color: #484848;
+  font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em;
+}
+
+.no-listings {
+  text-align: center;
+  color: #ff5a5f;
+  font-weight: 700;
+  margin-top: 2em;
+  padding: 1.5em;
+  background: #fff0f0;
+  border-radius: 16px;
+}
+
+// Hide inactive carousel images
+.hidden {
+  display: none !important;
+}
+
