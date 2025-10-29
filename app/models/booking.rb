@@ -10,6 +10,9 @@ class Booking < ApplicationRecord
   validates :total_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :review_rating, numericality: { only_integer: true, in: 1..5 }, allow_nil: true
 
+  validates :number_guests, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validate :not_over_capacity
+
   before_validation :set_total_price, if: -> { listing && start_date && end_date }
 
   def nights
@@ -28,5 +31,13 @@ class Booking < ApplicationRecord
 
   def set_total_price
     self.total_price = nights * listing.price_per_night.to_d
+  end
+
+  def not_over_capacity
+    return unless listing && number_guests.present?
+
+    if number_guests > listing.max_guests
+      errors.add(:number_guests, "must be ≤ #{listing.max_guests}")
+    end
   end
 end

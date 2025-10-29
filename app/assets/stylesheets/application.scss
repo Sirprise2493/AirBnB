@@ -16,6 +16,7 @@
 
 @import "components/listing_show_reviews";
 @import "components/user_show_profile_reviews";
+@import "components/listing_show_booking_request";
 
 // Geocoding
 @import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
@@ -34,5 +35,3 @@ html, body {
 .page-wrapper main {
   flex: 1;
 }
-
-
