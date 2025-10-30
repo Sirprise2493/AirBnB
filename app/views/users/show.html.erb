@@ -1,5 +1,8 @@
 <h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
 
+<h2>Bookings fpr your listing:</h2>
+<p>Content..................................</p>
+
 <h2>Your Bookings</h2>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
   <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
