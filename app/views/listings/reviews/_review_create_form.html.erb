@@ -1,6 +1,8 @@
 <%= simple_form_for([listing, review],
       html: { class: "card card-body shadow-sm border-0" }) do |f| %>
 
+  <%= hidden_field_tag :return_to, (local_assigns[:return_to] || request.fullpath) %>
+
   <div class="row g-3">
     <div class="col-12 col-md-4">
       <%= f.input :rating, as: :select,
@@ -17,8 +19,12 @@
     </div>
 
     <div class="col-12 d-flex gap-2">
-      <%= f.button :submit, "Safe review", class: "btn btn-primary" %>
-      <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#new-review" role="button">
+      <%= f.button :submit, "Save review", class: "btn btn-primary" %>
+
+      <a class="btn btn-outline-secondary"
+         data-bs-toggle="collapse"
+         href="##{local_assigns[:collapse_id] || 'review-form-fallback'}"
+         role="button">
         Cancel
       </a>
     </div>

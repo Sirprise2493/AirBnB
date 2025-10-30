@@ -67,6 +67,7 @@ Booking.create!(
   start_date:     Date.today + 7,
   end_date:       Date.today + 10,
   request_status: :pending,
+  number_guests:  2,
   total_price:    3 * l1.price_per_night
 )
 
@@ -76,6 +77,7 @@ Booking.create!(
   start_date:     Date.today + 14,
   end_date:       Date.today + 17,
   request_status: :accepted,
+  number_guests:  3,
   total_price:    3 * l2.price_per_night
 )
 
@@ -85,6 +87,7 @@ Booking.create!(
   start_date:     Date.today + 21,
   end_date:       Date.today + 24,
   request_status: :rejected,
+  number_guests:  2,
   total_price:    3 * l3.price_per_night
 )
 

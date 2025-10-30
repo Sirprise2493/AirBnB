@@ -19,3 +19,16 @@ document.addEventListener("turbo:load", () => {
     });
   }
 });
+
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-collapser-target]")
+  if (!btn) return
+  e.preventDefault()
+  const id = btn.getAttribute("data-collapser-target")
+  const el = id ? document.getElementById(id) : null
+  if (!el) return
+  el.classList.toggle("show")
+  const expanded = el.classList.contains("show")
+  btn.setAttribute("aria-expanded", expanded ? "true" : "false")
+}, { passive: false })
