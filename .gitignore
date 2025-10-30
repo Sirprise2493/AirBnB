@@ -8,7 +8,11 @@
 /.bundle
 
 # Ignore all environment files (except templates).
-/.env*
+/.env
+/.env.local
+/.env.development
+/.env.test
+/.env.production
 !/.env*.erb
 
 # Ignore all logfiles and tempfiles.
@@ -29,17 +33,27 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+# Ignore compiled assets.
 /public/assets
 
-# Ignore master key for decrypting credentials and more.
+# Ignore Rails credentials (you use .env for secrets).
 /config/master.key
+/config/credentials.yml.enc
 
-# Ignore .env file containing credentials.
-.env*
+# Ignore JavaScript dependencies.
+/node_modules/
 
-# Ignore Mac and Linux file system files
+# Ignore lock files (optional — keep one if your team uses it consistently)
+yarn.lock
+package-lock.json
+
+# Ignore macOS and Linux system files
 *.swp
 .DS_Store
+
+
+# Ignore local bin scripts
+/bin/dev
 
 # --- ADD THESE LINES BELOW ---
 
@@ -51,9 +65,6 @@
 # Ignore frontend build artifacts
 /dist
 /coverage
-
-# Ignore development scripts
-/bin/dev
 
 # Ignore editor & IDE settings
 .vscode

@@ -12,6 +12,8 @@
 @import "components/navbar";
 @import "components/footer";
 @import "pages/index";
+
+@import "components/listings";
 @import "pages/devise_edit";
 
 @import "components/listing_show_reviews";
@@ -36,3 +38,4 @@ html, body {
 .page-wrapper main {
   flex: 1;
 }
+

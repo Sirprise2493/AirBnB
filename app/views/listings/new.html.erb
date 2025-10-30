@@ -1,2 +1,17 @@
 <h1>Listings#new</h1>
 <p>Find me in app/views/listings/new.html.erb</p>
+<%= simple_form_for(@listing, html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.input :title, label: "Title", required: true %>
+    <%= f.input :description, as: :text, label: "Description", required: true, input_html: { rows: 6 } %>
+    <%= f.input :address, label: "Address", required: true %>
+    <%= f.input :price_per_night, as: :decimal, label: "Price per night (€)", required: true, input_html: { step: 0.01, min: 0 } %>
+    <%= f.input :max_guests, as: :integer, label: "Max. Guests", required: true, input_html: { min: 1 } %>
+    <%= f.input :photos, as: :file, label: "Photos",
+                input_html: { multiple: true, direct_upload: true } %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Created" %>
+  </div>
+<% end %>
