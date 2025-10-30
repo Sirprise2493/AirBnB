@@ -3,13 +3,13 @@
 <h2>Bookings fpr your listing:</h2>
 <p>Content..................................</p>
 
+
 <h2>Your Bookings</h2>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
   <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
              collection: @bookings,
              as: :booking %>
 </div>
-
 
 <%= render partial: "users/reviews/review_section",
            locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>

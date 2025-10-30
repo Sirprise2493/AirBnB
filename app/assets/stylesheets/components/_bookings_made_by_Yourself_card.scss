@@ -1,11 +1,9 @@
-/* app/assets/stylesheets/components/_booking_card.scss */
-
 /* ===========================
    Profile-specific wrapper
    =========================== */
 .bookings-made-by-aourself,
 .bookings-made-by-yourself {
-  /* Subtle outer padding to separate from grid gutter */
+  /* Separate from grid gutter */
   padding: .25rem;
 
   .booking-card-wrapper.booking-card--profile {
@@ -16,7 +14,7 @@
       linear-gradient(180deg, rgba(13,110,253,.02), rgba(25,135,84,.02));
     padding: .25rem;
 
-    /* Small “tag” label in the corner (optional) */
+    /* Corner tag (optional) */
     &::before {
       content: "Your booking";
       position: absolute;
@@ -66,7 +64,7 @@
 }
 
 /* ===========================
-   Spacing tweaks on tiny screens
+   Tiny-screen spacing tweaks
    =========================== */
 @media (max-width: 575.98px) {
   .booking-card .card-body { padding: .9rem; }

@@ -1,11 +1,10 @@
+<!-- app/views/users/bookings_made_by_yourself/_bookings_made_by_yourself_card.html.erb -->
 <% listing = booking.listing %>
-<% collapse_id = "review-form-#{booking.id}" %>
 
 <div class="col">
   <div class="bookings-made-by-aourself bookings-made-by-yourself">
     <div class="booking-card-wrapper booking-card--profile">
       <div class="card booking-card h-100 shadow-sm border-0">
-        <%# Image %>
         <% if listing.respond_to?(:photos) && listing.photos.attached? %>
           <%= image_tag listing.photos.first, class: "card-img-top booking-card__img", alt: listing.title %>
         <% else %>
@@ -22,7 +21,6 @@
           </div>
 
           <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
-
           <ul class="list-unstyled small text-muted mb-3">
             <li><strong>Dates:</strong> <%= l booking.start_date %> – <%= l booking.end_date %> <% if nights && nights > 0 %>(<%= nights %> nights)<% end %></li>
             <li><strong>Guests:</strong> <%= booking.number_guests %></li>
@@ -32,31 +30,35 @@
             <li><strong>Booked:</strong> <%= l booking.created_at.to_date %></li>
           </ul>
 
-          <div class="mt-auto d-flex flex-wrap gap-2">
-            <%= link_to "Show listing", listing_path(listing), class: "btn btn-success btn-sm" %>
+          <!-- ▼ Stimulus wrapper: contains BOTH the button and the panel ▼ -->
+          <div data-controller="collapse" class="mt-auto">
+            <div class="d-flex flex-wrap gap-2">
+              <%= link_to "Show listing", listing_path(listing), class: "btn btn-success btn-sm" %>
 
-            <%= button_to "Delete",
-                          booking_path(booking),
-                          method: :delete,
-                          data: { turbo_confirm: "Are you sure?" },
-                          class: "btn btn-danger btn-sm" %>
+              <%= button_to "Delete",
+                            booking_path(booking),
+                            method: :delete,
+                            data: { turbo_confirm: "Are you sure?" },
+                            class: "btn btn-danger btn-sm" %>
 
-            <button class="btn btn-primary btn-sm"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="##{collapse_id}"
-                    aria-expanded="false"
-                    aria-controls="<%= collapse_id %>">
-              Give a review
-            </button>
+              <button class="btn btn-primary btn-sm"
+                      type="button"
+                      data-action="click->collapse#toggle"
+                      aria-expanded="false">
+                Give a review
+              </button>
+            </div>
+
+            <!-- Target must be inside the same controller element -->
+            <div class="collapse mt-3" data-collapse-target="panel">
+              <%= render "listings/reviews/review_create_form",
+                         listing: listing,
+                         review: Review.new,
+                         return_to: user_profile_path %>
+            </div>
           </div>
+          <!-- ▲ end Stimulus wrapper ▲ -->
 
-          <div class="collapse mt-3" id="<%= collapse_id %>">
-            <%= render "listings/reviews/review_create_form",
-                       listing: listing,
-                       review: Review.new,
-                       return_to: user_profile_path %>
-          </div>
         </div>
       </div>
     </div>
