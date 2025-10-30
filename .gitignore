@@ -51,6 +51,22 @@ package-lock.json
 *.swp
 .DS_Store
 
+
 # Ignore local bin scripts
 /bin/dev
+
+# --- ADD THESE LINES BELOW ---
+
+# Ignore JavaScript & Node dependencies
+/node_modules
+/yarn.lock
+/package-lock.json
+
+# Ignore frontend build artifacts
+/dist
+/coverage
+
+# Ignore editor & IDE settings
+.vscode
+.idea
 

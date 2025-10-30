@@ -1,2 +1,12 @@
 <h1>Listings#show</h1>
 <p>Find me in app/views/listings/show.html.erb</p>
+
+<%= render partial: "listings/bookings/bookings_create",
+           locals: {listing: @listing, booking:(@booking || Booking.new) } %>
+
+<%= render partial: "listings/reviews/listings_reviews_show",
+           locals: { listing: @listing, reviews: @reviews, avg_rate: @avg_rate } %>
+
+<%= render "listings/geocoding/map_with_marker",
+           markers: @markers,
+           mapbox_api_key: ENV["MAPBOX_API_KEY"] %>

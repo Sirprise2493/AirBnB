@@ -1,0 +1,48 @@
+$primary: #ff385c;
+$border:  #e5e5e5;
+$text:    #222;
+$muted:   #717171;
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background: linear-gradient(to top, #ffffff, #f8f8f8);
+  border-top: 1px solid $border;
+  text-align: center;
+  padding: 30px 20px;
+  font-family: 'Inter', sans-serif;
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    img {
+      height: 26px;
+      width: auto;
+      max-width: 120px;
+      display: block;
+      opacity: 0.9;
+      object-fit: contain;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $muted;
+      margin: 4px 0 0;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    span {
+      font-size: 0.9rem;
+      color: $muted;
+      margin-top: 2px;
+    }
+  }
+}
+

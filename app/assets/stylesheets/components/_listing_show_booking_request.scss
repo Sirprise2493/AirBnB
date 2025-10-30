@@ -1,0 +1,74 @@
+/* booking.scss */
+
+/* ===== Layout: right-aligned, 35% width ===== */
+.booking-request-section {
+  display: flex;
+  justify-content: flex-end; // push content to the right
+
+  // The inner width wrapper
+  .w-35 {
+    width: 35%;
+    // Dein HTML hat "mx-auto" – zentriert normalerweise.
+    // Wir überschreiben das, damit es rechts klebt:
+    margin-left: auto;
+    margin-right: 0;
+
+    @media (max-width: 992px) {
+      width: 100%;
+      margin: 0; // full width on mobile
+    }
+  }
+}
+
+/* ===== Theme variables for the panel ===== */
+$booking-bg:        #b4d495;
+$booking-border:    #2b6cb0;
+$booking-border-lg: 3px;
+$booking-radius:    1rem;
+$booking-focus:     rgba(43, 108, 176, .15);
+
+$summary-bg:        #eef4ff;
+$summary-border:    $booking-border;
+
+/* ===== Card styling (overrides .border-0) ===== */
+.booking-request-section {
+  .card {
+    background-color: $booking-bg;
+    border: $booking-border-lg solid $booking-border !important; // override border-0
+    border-radius: $booking-radius;
+    box-shadow: 0 .25rem .75rem rgba(0,0,0,.05);
+  }
+
+  .card-title {
+    margin-bottom: .75rem;
+  }
+
+  /* Inputs/selects inside the card */
+  .form-control,
+  .form-select {
+    border-color: $booking-border;
+    border-width: 2px;
+    &:focus {
+      border-color: $booking-border;
+      box-shadow: 0 0 0 .25rem $booking-focus;
+    }
+  }
+
+  /* Summary box (Nights / Estimated total) */
+  .rounded-3.d-flex.justify-content-between.align-items-center {
+    // Das ist deine Summary-Box – gib ihr eine class, wenn du willst (z. B. .summary-box)
+    background-color: $summary-bg !important;
+    border: 2px dashed $summary-border;
+    border-radius: $booking-radius * .75;
+  }
+
+  /* Buttons (optional) */
+  .btn-primary {
+    background-color: $booking-border;
+    border-color: $booking-border;
+    &:hover {
+      background-color: darken($booking-border, 8%);
+      border-color: darken($booking-border, 8%);
+    }
+  }
+}
