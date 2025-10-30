@@ -81,6 +81,17 @@ export default class extends Controller {
     if (this.miniSearch) {
       this.miniSearch.addEventListener("click", this.expandMiniSearch)
     }
+
+    // Initialize Flatpickr for date inputs if library is loaded
+    if (window.flatpickr) {
+      flatpickr("input[placeholder='Add dates']", {
+        mode: "range",
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        allowInput: true,
+      });
+    }
   }
   
   disconnect() {
@@ -220,4 +231,3 @@ export default class extends Controller {
     }[s]))
   }
 }
-

@@ -32,3 +32,4 @@ document.addEventListener("click", (e) => {
   const expanded = el.classList.contains("show")
   btn.setAttribute("aria-expanded", expanded ? "true" : "false")
 }, { passive: false })
+
