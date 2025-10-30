@@ -1,0 +1,71 @@
+<div class="booking-request-section"
+     data-controller="booking"
+     data-booking-price-per-night-value="<%= listing.price_per_night.to_f %>"
+     data-booking-currency-value="EUR">
+
+  <div class="w-35 mx-auto">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">Request a booking</h5>
+        <p class="text-muted mb-4">
+          Price per night: <strong><%= number_to_currency(listing.price_per_night) %></strong>
+        </p>
+
+        <%= simple_form_for [listing, (booking || Booking.new)], html: { class: "needs-validation" } do |f| %>
+          <div class="row g-3">
+            <div class="col-6">
+              <%= f.input :start_date,
+                  as: :date, html5: true, required: true,
+                  input_html: {
+                    id: "booking_start_date",
+                    class: "form-control",
+                    "data-booking-target": "start",
+                    "data-action": "change->booking#onStartChange"
+                  },
+                  label: "Check-in" %>
+            </div>
+
+            <div class="col-6">
+              <%= f.input :end_date,
+                  as: :date, html5: true, required: true,
+                  input_html: {
+                    id: "booking_end_date",
+                    class: "form-control",
+                    "data-booking-target": "end",
+                    "data-action": "change->booking#onEndChange"
+                  },
+                  label: "Check-out" %>
+            </div>
+
+            <div class="col-6">
+              <%= f.input :number_guests,
+                as: :select,
+                label: "Number of guests",
+                required: true,
+                collection: (1..(listing.max_guests || 1)).to_a,
+                prompt: "Select number of guests",
+                hint: "Max. number of guests: #{listing.max_guests}" %>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="small text-muted">Nights</div>
+                  <div class="fs-5 fw-semibold" data-booking-target="nights">0</div>
+                </div>
+                <div class="text-end">
+                  <div class="small text-muted">Estimated total</div>
+                  <div class="fs-4 fw-bold" data-booking-target="total"><%= number_to_currency(0) %></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 d-grid">
+              <%= f.button :submit, "Request booking", class: "btn btn-primary btn-lg" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
