@@ -1,5 +1,10 @@
 <h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
 
+
+<%= render partial: "users/listings_made_by_yourself/listings_create_form",
+           locals: { listing: @listing } %>
+
+
 <h2>Bookings fpr your listing:</h2>
 <p>Content..................................</p>
 

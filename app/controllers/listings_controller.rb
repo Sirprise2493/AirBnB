@@ -5,22 +5,28 @@ class ListingsController < ApplicationController
 
   # GET /listings/new
   def new
-    @listing = Listing.new
+    @listing = current_user.listings.new
   end
 
   # POST /listings
   def create
     @listing = current_user.listings.new(listing_params)
     if @listing.save
-      redirect_to listings_path, notice: "Listing created."
+      redirect_to user_profile_path, notice: "Listing created."
     else
-      render :new, status: :unprocessable_entity
+      @user     = current_user
+      @reviews  = @user.reviews.includes(:listing).order(created_at: :desc)
+      avg       = @reviews.average(:rating) || 0
+      @avg_rate = avg.to_f.round(2)
+      @bookings = @user.bookings.order(created_at: :desc)
+      # @listing enthält hier bereits die Fehler
+
+      render "users/show", status: :unprocessable_entity
     end
   end
 
 
   def show
-    
     @listing = Listing.includes(reviews: :user).find(params[:id])
     @reviews = @listing.reviews.order(rating: :desc)
     @avg_rate = (@reviews.average(:rating) || 0).to_f.round(2)
@@ -44,7 +50,7 @@ class ListingsController < ApplicationController
         []
       end
   end
-    
+
   private
 
   def listing_params
@@ -52,5 +58,5 @@ class ListingsController < ApplicationController
       :title, :description, :address, :price_per_night, :max_guests,
       photos: [] # mehrere Bilder optional
     )
-  end 
+  end
 end
