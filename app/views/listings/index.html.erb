@@ -37,7 +37,7 @@
           </div>
         <% else %>
           <!-- Fallback image if no photos are attached -->
-          <%= image_tag "placeholder.jpg", class: "listing-photo" %>
+          <%= cl_image_tag "placeholder.jpg", class: "listing-photo" %>
         <% end %>
 
         <!-- Card content (title, description, details) -->
