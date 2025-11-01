@@ -25,6 +25,12 @@ class ListingsController < ApplicationController
     end
   end
 
+  def destroy
+    @listing = Listing.find(params[:id])
+    @listing.destroy
+    redirect_to user_profile_path, status: :see_other
+  end
+
 
   def show
     @listing = Listing.includes(reviews: :user).find(params[:id])
