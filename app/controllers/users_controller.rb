@@ -10,5 +10,7 @@ class UsersController < ApplicationController
     @bookings = @user.bookings.order(created_at: :desc)
 
     @listing = @user.listings.new
+
+    @listings = @user.listings.order(created_at: :desc)
   end
 end

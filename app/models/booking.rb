@@ -2,7 +2,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :listing
 
-  enum request_status: { pending: 0, accepted: 1, rejected: 2 }
+  enum request_status: { pending: 0, accepted: 1, rejected: 2 }, _prefix: true
 
   validates :start_date, :end_date, presence: true
   validate  :end_after_start

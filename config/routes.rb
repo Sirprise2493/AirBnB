@@ -5,13 +5,18 @@ Rails.application.routes.draw do
   # /listings (index), /listings/new (new), /listings (POST) (create), /listings/:id (show)
   resources :listings, only: [:index, :new, :create]
 
-  resources :listings, only: [:show] do
+  resources :listings, only: [:show, :destroy] do
     resources :reviews, only: [:create]
     resources :bookings, only: [:create]
   end
 
   # /bookings/new (new), /bookings (POST) (create), /bookings/:id (show)
-  resources :bookings, only: [:new, :create, :show, :destroy]
+  resources :bookings, only: [:new, :create, :show, :destroy] do
+    member do
+      patch :accept
+      patch :reject
+    end
+  end
 
   # /users/:id/profile (show in controller and special path user_profile_path)
   # get "users/:id/profile", to: "users#show", as: :user_profile

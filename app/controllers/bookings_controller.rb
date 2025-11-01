@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_listing, only: :create
-  before_action :set_booking, only: [:show, :destroy]
+  before_action :set_booking, only: [:show, :destroy, :accept, :reject]
   before_action :authorize_booking!, only: [:show, :destroy]
 
   def create
@@ -21,6 +21,20 @@ class BookingsController < ApplicationController
   def destroy
     @booking.destroy
     redirect_back fallback_location: user_profile_path, status: :see_other, notice: "Booking deleted"
+  end
+
+  def accept
+    @booking.update!(request_status: :accepted) # => 1
+    redirect_back fallback_location: user_profile_path,
+                  notice: "Booking accepted.",
+                  status: :see_other
+  end
+
+  def reject
+    @booking.update!(request_status: :rejected) # => 2
+    redirect_back fallback_location: user_profile_path,
+                  notice: "Booking rejected.",
+                  status: :see_other
   end
 
   private
