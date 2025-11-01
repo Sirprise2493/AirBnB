@@ -1,0 +1,47 @@
+<h1 class="preset1 ink b">Booking Requests</h1>
+
+<% if @booking_requests.any? %>
+  <div class="requests">
+    <% @booking_requests.each do |booking| %>
+      <% nights = (booking.end_date - booking.start_date).to_i %>
+      <% total  = (nights * booking.listing.price_per_night).to_f %>
+
+      <div class="request-card">
+        <div class="info">
+          <div class="title">
+            <strong><%= booking.user.first_name %></strong> pediu
+            <%= booking.number_guests %> hóspedes
+          </div>
+
+          <div class="dates">
+            <%= booking.start_date %> → <%= booking.end_date %>
+            (<%= nights %> noites)
+          </div>
+
+          <div class="money">
+            € <%= number_with_precision(total, precision: 2) %>
+            (@ € <%= number_with_precision(booking.listing.price_per_night, precision: 2) %>/noite)
+          </div>
+
+          <div class="status">
+            Status: <%= booking.status.presence || "pending" %>
+          </div>
+        </div>
+
+        <div class="actions">
+          <%= button_to "Accept",
+                listing_booking_request_path(@listing, booking, status: "accepted"),
+                method: :patch,
+                class: "btn accept" %>
+
+          <%= button_to "Reject",
+                listing_booking_request_path(@listing, booking, status: "rejected"),
+                method: :patch,
+                class: "btn reject" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No booking requests yet.</p>
+<% end %>

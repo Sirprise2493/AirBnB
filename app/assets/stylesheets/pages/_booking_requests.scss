@@ -1,0 +1,80 @@
+.requests-page {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.requests-title {
+  font-size: 28px;
+  line-height: 120%;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.request-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.request-info .title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.request-info .dates,
+.request-info .money,
+.request-info .status {
+  color: #555;
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.request-info .money {
+  color: #111;
+  font-weight: 700;
+}
+
+.request-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-accept {
+  background: #16a34a;
+  color: #fff;
+}
+
+.btn-reject {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.92;
+}
+
+.empty {
+  color: #666;
+  margin-top: 8px;
+}
