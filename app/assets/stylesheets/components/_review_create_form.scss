@@ -1,0 +1,41 @@
+/* Styles sind auf das eine Formular scope-basiert – Farben kommen von CSS-Variablen am <form> */
+.review-theme-card {
+  background-color: var(--panel-bg);
+  border: 3px solid var(--panel-border) !important;
+  border-radius: 1rem;
+  box-shadow: 0 .25rem .75rem rgba(0,0,0,.05);
+
+  .card-title { margin-bottom: .5rem; }
+
+  /* Inputs/Selects */
+  .form-control,
+  .form-select,
+  .input-group .input-group-text {
+    border-width: 2px;
+    border-color: var(--panel-border);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--panel-border);
+    box-shadow: 0 0 0 .25rem var(--focus-ring);
+  }
+
+  /* Textarea-Box mit gestricheltem Rand */
+  .review-content-box {
+    background-color: var(--box-bg) !important;
+    border: 2px dashed var(--panel-border);
+    border-radius: .75rem;
+
+    .form-control { background-color: #fff; }
+  }
+
+  /* Buttons im Border-Ton */
+  .btn-primary {
+    border-width: 2px;
+    background-color: var(--panel-border);
+    border-color: var(--panel-border);
+
+    &:hover { filter: brightness(0.92); }
+  }
+}

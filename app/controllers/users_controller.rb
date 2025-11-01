@@ -8,5 +8,7 @@ class UsersController < ApplicationController
     @avg_rate = avg.to_f.round(2)
 
     @bookings = @user.bookings.order(created_at: :desc)
+
+    @listing = @user.listings.new
   end
 end

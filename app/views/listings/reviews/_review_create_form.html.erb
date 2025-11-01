@@ -1,32 +1,54 @@
+<%
+  theme = (local_assigns[:theme] || :green_blue).to_sym
+  palette = {
+    green_blue: { bg: "#b4d495", brd: "#2b6cb0", ring: "rgba(43,108,176,.18)", box: "#eef4ff" },
+    emerald:    { bg: "#d1f5d3", brd: "#0f766e", ring: "rgba(15,118,110,.20)", box: "#ecfdf5" },
+    gray:       { bg: "#f3f4f6", brd: "#374151", ring: "rgba(55,65,81,.18)",  box: "#f9fafb" }
+  }[theme]
+%>
+
 <%= simple_form_for([listing, review],
-      html: { class: "card card-body shadow-sm border-0" }) do |f| %>
+      html: {
+        class: "card shadow-sm border-0 review-theme-card",
+        style: "--panel-bg: #{palette[:bg]}; --panel-border: #{palette[:brd]}; --focus-ring: #{palette[:ring]}; --box-bg: #{palette[:box]};"
+      }) do |f| %>
 
   <%= hidden_field_tag :return_to, (local_assigns[:return_to] || request.fullpath) %>
 
-  <div class="row g-3">
-    <div class="col-12 col-md-4">
-      <%= f.input :rating, as: :select,
-                  collection: 1..5, include_blank: "Rating (1–5)",
-                  input_html: { class: "form-select" },
-                  label: "Rating" %>
-    </div>
+  <div class="card-body p-4">
+    <h6 class="card-title mb-2">Write a review</h6>
+    <p class="text-muted small mb-4">Share your experience to help other guests.</p>
 
-    <div class="col-12">
-      <%= f.input :content,
-                  as: :text,
-                  label: "Your review",
-                  input_html: { rows: 4, placeholder: "What did you like (or not)?" } %>
-    </div>
+    <div class="row g-3">
+      <div class="col-12 col-md-4">
+        <%= f.input :rating,
+          as: :select,
+          collection: 1..5,
+          include_blank: "Rating (1–5)",
+          input_html: { class: "form-select form-select-sm" },
+          label: "Rating" %>
+      </div>
 
-    <div class="col-12 d-flex gap-2">
-      <%= f.button :submit, "Save review", class: "btn btn-primary" %>
+      <div class="col-12">
+        <div class="review-content-box p-3 rounded-3">
+          <div class="small text-muted mb-2">Your review</div>
+          <%= f.input :content,
+            as: :text,
+            label: false,
+            input_html: { rows: 4, class: "form-control form-control-sm", placeholder: "What did you like (or not)?" } %>
+        </div>
+      </div>
 
-      <a class="btn btn-outline-secondary"
-         data-bs-toggle="collapse"
-         href="##{local_assigns[:collapse_id] || 'review-form-fallback'}"
-         role="button">
-        Cancel
-      </a>
+      <div class="col-12 d-flex flex-wrap gap-2">
+        <%= f.button :submit, "Save review", class: "btn btn-primary btn-sm px-3" %>
+
+        <a class="btn btn-outline-secondary btn-sm"
+           data-bs-toggle="collapse"
+           href="##{local_assigns[:collapse_id] || 'review-form-fallback'}"
+           role="button">
+          Cancel
+        </a>
+      </div>
     </div>
   </div>
 <% end %>
