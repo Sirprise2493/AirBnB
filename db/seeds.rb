@@ -1,6 +1,8 @@
 require "open-uri" # Required to open URLs when attaching photos
+require "openssl"
 
-# db/seeds.rb
+# Disable SSL verification temporarily (safe for local development)
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 # -----------------------------------------------------------------------------
 # Clean up (keep Users intact!)
@@ -22,8 +24,8 @@ rescue ActiveRecord::RecordNotFound
   abort "Required user with id=#{id} does not exist. Please create it first."
 end
 
-host1 = require_user(1) # owner for l1
-host2 = require_user(3) # owner for l2 & l3
+host1 = require_user(63) # owner for l1
+host2 = require_user(63) # owner for l2 & l3
 
 guest = User.where.not(id: [host1.id, host2.id]).first
 abort "No guest user available (need any user not id #{host1.id}/#{host2.id})." unless guest
@@ -65,7 +67,7 @@ l4 = Listing.create!(
   address:         "Lapland, Sweden",
   price_per_night: 150.00,
   max_guests:      4,
-  user:            u_host1
+  user:            host1
 )
 
 l5 = Listing.create!(
@@ -74,7 +76,7 @@ l5 = Listing.create!(
   address:         "Comporta, Portugal",
   price_per_night: 200.00,
   max_guests:      5,
-  user:            u_both
+  user:            host2
 )
 
 puts "Attaching photos to listings..."

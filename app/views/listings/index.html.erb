@@ -37,7 +37,9 @@
           </div>
         <% else %>
           <!-- Fallback image if no photos are attached -->
-          <%= image_tag "placeholder.jpg", class: "listing-photo" %>
+          <div class="listing-photos">
+            <%= cl_image_tag("placeholder_airbnb", class: "listing-photo") %>
+          </div>
         <% end %>
 
         <!-- Card content (title, description, details) -->
