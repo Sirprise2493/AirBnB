@@ -1,46 +1,38 @@
+<%# app/views/listings/_listings_grid.html.erb %>
+<%# Erwartet: listings: (Array von Listing) %>
+
 <% if @listings.any? %>
-  <!-- Grid container for all listing cards -->
   <div class="listings-container">
     <% @listings.each do |listing| %>
       <div class="listing-card">
         <% if listing.photos.attached? %>
-          <!-- Photo carousel (controlled by Stimulus) -->
           <div class="listing-photos" data-controller="carousel">
             <% listing.photos.each do |photo| %>
-              <!-- Each image starts hidden; Stimulus shows one at a time -->
-              <%= image_tag url_for(photo),
-                  class: "listing-photo hidden",
-                  data: { carousel_target: "image" } %>
+              <%= cl_image_tag photo.key,
+                    width: 400, height: 300, crop: :fill,
+                    class: "listing-photo hidden",
+                    data: { carousel_target: "image" } %>
             <% end %>
 
-            <!-- Carousel navigation buttons (only shown if multiple photos) -->
             <% if listing.photos.count > 1 %>
-              <button
-                type="button"
-                data-action="click->carousel#previous"
-                class="carousel-btn left">
-                ‹
-              </button>
-              <button
-                type="button"
-                data-action="click->carousel#next"
-                class="carousel-btn right">
-                ›
-              </button>
+              <button type="button"
+                      data-action="click->carousel#previous"
+                      class="carousel-btn left">‹</button>
+              <button type="button"
+                      data-action="click->carousel#next"
+                      class="carousel-btn right">›</button>
             <% end %>
           </div>
         <% else %>
-          <!-- Fallback image if no photos are attached -->
           <%= image_tag "placeholder.jpg", class: "listing-photo" %>
         <% end %>
 
-        <!-- Card content (title, description, details) -->
         <div class="listing-card-content">
           <h2 class="listing-title">
-            <!-- Link to the listing's show page -->
             <%= link_to listing.title, listing_path(listing), class: "listing-link" %>
           </h2>
           <p class="listing-desc"><%= listing.description %></p>
+
           <div class="listing-details">
             <span><%= listing.address %></span>
             <span>€<%= listing.price_per_night %>/night</span>
@@ -51,7 +43,5 @@
     <% end %>
   </div>
 <% else %>
-  <!-- Message shown when no listings exist -->
   <p class="no-listings">No listings found.</p>
 <% end %>
-
