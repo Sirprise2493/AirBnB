@@ -1,79 +1,96 @@
-/* ===== Layout: right-aligned, 35% width (wie Booking) ===== */
+/* === Airbnb-style Create Listing Form === */
 .listing-create-section {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  margin: 2rem 0;
 
   .w-35 {
-    width: 35%;
-    margin-left: auto;
-    margin-right: 0;
-
-    @media (max-width: 992px) {
-      width: 100%;
-      margin: 0;
-    }
+    width: 100%;
+    max-width: 600px;
   }
-}
 
-/* ===== Theme: grünliches Panel + blauer Rahmen (wie Booking) ===== */
-$panel-bg:         #b4d495;  // ähnlich Booking $booking-bg
-$panel-border:     #2b6cb0;  // wie Booking $booking-border
-$panel-border-lg:  3px;
-$panel-radius:     1rem;
-$panel-focus:      rgba(43, 108, 176, .15);
-
-$photos-bg:        #eef4ff;  // wie Booking summary bg
-$photos-border:    $panel-border;
-
-/* ===== Card & Controls ===== */
-.listing-create-section {
   .card {
-    background-color: $panel-bg;
-    border: $panel-border-lg solid $panel-border !important; // override border-0
-    border-radius: $panel-radius;
-    box-shadow: 0 .25rem .75rem rgba(0,0,0,.05);
-  }
-
-  .card-title { margin-bottom: .75rem; }
-
-  /* Inputs/selects in Card */
-  .form-control,
-  .form-select,
-  .input-group .input-group-text {
-    border-color: $panel-border;
-    border-width: 2px;
-  }
-
-  .form-control:focus,
-  .form-select:focus {
-    border-color: $panel-border;
-    border-width: 2px;
-    box-shadow: 0 0 0 .25rem $panel-focus;
-  }
-
-  /* Input-Group soll bündig und kräftig wirken */
-  .input-group {
-    .input-group-text { border-width: 2px; }
-    &:focus-within {
-      .input-group-text, .form-control { border-width: 2px; }
-    }
-  }
-
-  /* Photos-Box im gleichen Stil wie die Booking-Summary (dashed) */
-  .photos-box {
-    background-color: $photos-bg !important;
-    border: 2px dashed $photos-border;
-    border-radius: $panel-radius * .75;
-  }
-
-  /* Buttons im Panel-Farbton */
-  .btn-primary {
-    background-color: $panel-border;
-    border-color: $panel-border;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(72, 72, 72, 0.08);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-      background-color: darken($panel-border, 8%);
-      border-color: darken($panel-border, 8%);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(72, 72, 72, 0.12);
+    }
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.75rem;
+  }
+
+  .text-muted {
+    color: #717171 !important;
+    font-size: 0.95rem;
+  }
+
+  /* Form fields */
+  .form-control,
+  .input-group-text {
+    border: 1.5px solid #ddd;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: #ff5a5f;
+      box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.15);
+    }
+  }
+
+  /* Input groups (price field) */
+  .input-group-text {
+    background: #fafafa;
+    color: #555;
+    font-weight: 500;
+    border-right: none;
+  }
+
+  .input-group .form-control {
+    border-left: none;
+  }
+
+  /* Photos box */
+  .photos-box {
+    background: #fafafa;
+    border: 2px dashed #ddd;
+    border-radius: 16px;
+    padding: 1rem;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: #ff5a5f;
+    }
+  }
+
+  /* Submit button */
+  .btn-primary {
+    background: #ff5a5f;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: #d60436;
+      transform: translateY(-2px);
     }
   }
 }

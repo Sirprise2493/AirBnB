@@ -1,74 +1,210 @@
-/* booking.scss */
+/* === Airbnb-style Booking Request + Booking Cards === */
 
-/* ===== Layout: right-aligned, 35% width ===== */
+/* --- Layout for Booking Request panels --- */
 .booking-request-section {
   display: flex;
-  justify-content: flex-end; // push content to the right
+  justify-content: center;
+  margin: 2rem 0;
 
-  // The inner width wrapper
   .w-35 {
-    width: 35%;
-    // Dein HTML hat "mx-auto" – zentriert normalerweise.
-    // Wir überschreiben das, damit es rechts klebt:
-    margin-left: auto;
-    margin-right: 0;
+    width: 100%;
+    max-width: 600px;
+  }
 
-    @media (max-width: 992px) {
-      width: 100%;
-      margin: 0; // full width on mobile
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(72, 72, 72, 0.08);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(72, 72, 72, 0.12);
+    }
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.75rem;
+  }
+
+  .text-muted {
+    color: #717171 !important;
+    font-size: 0.95rem;
+  }
+
+  .form-control,
+  .input-group-text {
+    border: 1.5px solid #ddd;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: #ff5a5f;
+      box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.15);
+    }
+  }
+
+  .input-group-text {
+    background: #fafafa;
+    color: #555;
+    font-weight: 500;
+    border-right: none;
+  }
+
+  .input-group .form-control {
+    border-left: none;
+  }
+
+  .btn-primary {
+    background: #ff5a5f;
+    border: none;
+    font-weight: 500;
+    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: #d60436;
+      transform: translateY(-2px);
     }
   }
 }
 
-/* ===== Theme variables for the panel ===== */
-$booking-bg:        #b4d495;
-$booking-border:    #2b6cb0;
-$booking-border-lg: 3px;
-$booking-radius:    1rem;
-$booking-focus:     rgba(43, 108, 176, .15);
+/* --- Booking cards inside the Profile page (“Bookings for Your Listings”) --- */
+.listing-bookings {
+  margin: 2rem 0;
 
-$summary-bg:        #eef4ff;
-$summary-border:    $booking-border;
-
-/* ===== Card styling (overrides .border-0) ===== */
-.booking-request-section {
-  .card {
-    background-color: $booking-bg;
-    border: $booking-border-lg solid $booking-border !important; // override border-0
-    border-radius: $booking-radius;
-    box-shadow: 0 .25rem .75rem rgba(0,0,0,.05);
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 1rem;
   }
 
-  .card-title {
-    margin-bottom: .75rem;
-  }
+  .booking-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(72, 72, 72, 0.08);
+    padding: 1.5rem 1.75rem;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  /* Inputs/selects inside the card */
-  .form-control,
-  .form-select {
-    border-color: $booking-border;
-    border-width: 2px;
-    &:focus {
-      border-color: $booking-border;
-      box-shadow: 0 0 0 .25rem $booking-focus;
-    }
-  }
-
-  /* Summary box (Nights / Estimated total) */
-  .rounded-3.d-flex.justify-content-between.align-items-center {
-    // Das ist deine Summary-Box – gib ihr eine class, wenn du willst (z. B. .summary-box)
-    background-color: $summary-bg !important;
-    border: 2px dashed $summary-border;
-    border-radius: $booking-radius * .75;
-  }
-
-  /* Buttons (optional) */
-  .btn-primary {
-    background-color: $booking-border;
-    border-color: $booking-border;
     &:hover {
-      background-color: darken($booking-border, 8%);
-      border-color: darken($booking-border, 8%);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(72, 72, 72, 0.12);
+    }
+
+    /* header */
+    .booking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+        color: #222;
+      }
+
+      .badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 12px;
+      }
+    }
+
+    /* details section */
+    .booking-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem 1rem;
+      margin-bottom: 1rem;
+
+      .detail {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.95rem;
+        color: #444;
+
+        i {
+          color: #ff5a5f;
+          font-size: 1rem;
+        }
+
+        strong {
+          color: #222;
+        }
+
+        &.total {
+          font-weight: 600;
+        }
+      }
+    }
+
+    /* buttons */
+    .booking-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+
+      .btn {
+        border-radius: 25px;
+        font-size: 0.85rem;
+        padding: 0.45rem 1rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .btn-success {
+        background: #00a699;
+        border: none;
+
+        &:hover {
+          background: darken(#00a699, 8%);
+          transform: translateY(-2px);
+        }
+      }
+
+      .btn-outline-danger {
+        color: #ff5a5f;
+        border: 1.5px solid #ff5a5f;
+
+        &:hover {
+          background: #ff5a5f;
+          color: #fff;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    p {
+      margin-bottom: 0.4rem;
+      color: #555;
+
+      strong {
+        color: #222;
+      }
     }
   }
+}
+
+/* --- Visual spacing between listings’ booking groups --- */
+.user-section .listing-bookings + .listing-bookings {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 2rem;
 }

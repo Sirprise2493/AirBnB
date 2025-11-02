@@ -1,0 +1,67 @@
+/* === User Profile Page Styling === */
+.user-profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #222;
+  }
+
+  .user-section {
+    margin-bottom: 4rem;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #333;
+      border-left: 4px solid #ff5a5f;
+      padding-left: 0.75rem;
+    }
+
+    p {
+      color: #666;
+    }
+
+    hr {
+      margin: 3rem 0;
+      border: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  /* === Bookings Section === */
+  .listing-bookings {
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+
+    .booking-card {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease;
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+
+    .badge {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* === Reviews Section === */
+  .reviews-section {
+    background: #fafafa;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+}
