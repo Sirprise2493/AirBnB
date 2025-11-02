@@ -4,20 +4,28 @@
   <!-- === Your Listings Section === -->
   <section class="user-section">
     <h2>Your Listings</h2>
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-12 col-md-7">
+          <div class="profile-listings-container">
+            <% if @listings.any? %>
+              <%= render partial: "users/listing_card_mini",
+                        collection: @listings,
+                        as: :listing %>
+            <% else %>
+              <p>You haven’t created any listings yet.</p>
+            <% end %>
+          </div>
+        </div>
 
-    <div class="profile-listings-container">
-      <% if @listings.any? %>
-        <%= render partial: "users/listing_card_mini",
-                  collection: @listings,
-                  as: :listing %>
-      <% else %>
-        <p>You haven’t created any listings yet.</p>
-      <% end %>
+        <div class="col-12 col-md-5 align-self-start">
+          <div class="mt-0 pt-0 listings-create-form">
+            <%= render partial: "users/listings_made_by_yourself/listings_create_form",
+                      locals: { listing: @listing } %>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Form to create new listing -->
-    <%= render partial: "users/listings_made_by_yourself/listings_create_form",
-              locals: { listing: @listing } %>
   </section>
 
   <hr>
