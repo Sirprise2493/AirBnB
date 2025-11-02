@@ -4,8 +4,10 @@
       <span class="number"><%= avg_rate %></span>
       <span class="star">★</span>
     </div>
+
     <p class="subtitle">
-      <%= pluralize(reviews.size, "review") %> written by
+      <%= pluralize(reviews.respond_to?(:total_count) ? reviews.total_count : reviews.size, "review") %>
+      written by
       <strong><%= [user.first_name, user.last_name].compact.join(" ") %></strong>
     </p>
 
@@ -17,9 +19,17 @@
     </div>
   </div>
 
-  <div class="grid">
-    <% reviews.each do |review| %>
-      <%= render partial: "users/reviews/review_card", locals: { review: review } %>
-    <% end %>
-  </div>
+  <% if reviews.present? %>
+    <div class="grid">
+      <% reviews.each do |review| %>
+        <%= render partial: "users/reviews/review_card", locals: { review: review } %>
+      <% end %>
+    </div>
+
+    <div class="mt-4">
+      <%= paginate reviews %>
+    </div>
+  <% else %>
+    <p class="text-muted mt-3">Noch keine Reviews.</p>
+  <% end %>
 </section>

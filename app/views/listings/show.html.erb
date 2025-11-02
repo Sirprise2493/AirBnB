@@ -4,8 +4,11 @@
 <%= render partial: "listings/bookings/bookings_create",
            locals: {listing: @listing, booking:(@booking || Booking.new) } %>
 
-<%= render partial: "listings/reviews/listings_reviews_show",
-           locals: { listing: @listing, reviews: @reviews, avg_rate: @avg_rate } %>
+<%= render "listings/reviews/listings_reviews_show",
+           listing: @listing,
+           reviews: @reviews,
+           avg_rate: @avg_rate,
+           review: @review %>
 
 <%= render "listings/geocoding/map_with_marker",
            markers: @markers,

@@ -1,6 +1,5 @@
 <article class="card">
   <header class="card-head">
-    <%# Show the author's avatar (this profile’s user) or a placeholder %>
     <% if review.user&.photo.present? %>
       <%= cl_image_tag review.user.photo.key,
             class: "avatar", width: 48, height: 48, crop: :thumb, gravity: :face %>
