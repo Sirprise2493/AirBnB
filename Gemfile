@@ -85,3 +85,9 @@ gem "devise"
 
 #Geocoding
 gem "geocoder"
+
+
+
+#Pagy for review cards
+gem 'kaminari'
+gem 'kaminari-bootstrap'  # for Bootstrap 5 Styles

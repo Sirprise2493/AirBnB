@@ -31,15 +31,20 @@ class ListingsController < ApplicationController
     redirect_to user_profile_path, status: :see_other
   end
 
-
   def show
     @listing = Listing.includes(reviews: :user).find(params[:id])
-    @reviews = @listing.reviews.order(rating: :desc)
-    @avg_rate = (@reviews.average(:rating) || 0).to_f.round(2)
 
-    # Create a review
+    base_scope = @listing.reviews
+                        .includes(:user)
+                        .order(rating: :desc)
+
+    @avg_rate = (base_scope.reorder(nil).average(:rating) || 0).to_f.round(2)
+
+    @reviews = base_scope.page(params[:page]).per(6)
+
     @review = Review.new
 
+    # Geocoding
     @markers =
       if @listing.geocoded?
         [{
@@ -56,6 +61,7 @@ class ListingsController < ApplicationController
         []
       end
   end
+
 
   private
 

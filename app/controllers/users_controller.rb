@@ -3,9 +3,10 @@ class UsersController < ApplicationController
 
   def show
     @user     = current_user
-    @reviews  = @user.reviews.includes(:listing).order(created_at: :desc)
-    avg       = @reviews.average(:rating) || 0
+    @reviews_a  = @user.reviews.includes(:listing).order(created_at: :desc)
+    avg       = @reviews_a.average(:rating) || 0
     @avg_rate = avg.to_f.round(2)
+    @reviews = @reviews_a.page(params[:page]).per(6)
 
     @bookings = @user.bookings.order(created_at: :desc)
 
