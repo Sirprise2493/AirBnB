@@ -1,0 +1,78 @@
+// === Mini Listing Cards (Profile Page) ===
+
+.profile-listings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem 2rem;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(72, 72, 72, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(72, 72, 72, 0.12);
+  }
+}
+
+.profile-card-media {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+}
+
+.profile-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 0.5rem;
+}
+
+.profile-card-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: #ff5a5f;
+    text-decoration: underline;
+  }
+}
+
+.delete-btn {
+  align-self: flex-end;
+  background: #ff5a5f;
+  color: #fff;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.8rem;
+  border-radius: 25px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #d60436;
+    transform: translateY(-2px);
+  }
+}

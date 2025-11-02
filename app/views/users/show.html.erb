@@ -1,76 +1,132 @@
-<h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
+<div class="user-profile">
+  <h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
 
+  <!-- === Your Listings Section === -->
+  <section class="user-section">
+    <h2>Your Listings</h2>
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-12 col-md-7">
+          <div class="profile-listings-container">
+            <% if @listings.any? %>
+              <%= render partial: "users/listing_card_mini",
+                        collection: @listings,
+                        as: :listing %>
+            <% else %>
+              <p>You haven’t created any listings yet.</p>
+            <% end %>
+          </div>
+        </div>
 
+        <div class="col-12 col-md-5 align-self-start">
+          <div class="mt-0 pt-0 listings-create-form">
+            <%= render partial: "users/listings_made_by_yourself/listings_create_form",
+                      locals: { listing: @listing } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<% @listings.each do |listing| %>
-  <p><%= listing.title %></p>
+  <hr>
 
-  <%= button_to listing,
-                method: :delete,
-                data: { turbo_confirm: "Are you sure you want to delete this item?" },
-                class: "btn btn-danger rounded-pill px-3" do %>
-    <i class="bi bi-trash"></i> Delete
-  <% end %>
+  <!-- === Bookings for Your Listings Section === -->
+  <section class="user-section">
+    <h2>Bookings for Your Listings</h2>
 
-  <p>-----</p>
+    <% if @listings.any? %>
+      <% @listings.each do |listing| %>
+        <% if listing.bookings.any? %>
+          <div class="listing-bookings mb-4">
+            <h3><%= listing.title %></h3>
 
-  <% listing.bookings.each do |booking| %>
-    <p>Start date: <%= booking.start_date %></p>
-    <p>End date: <%= booking.end_date %></p>
+            <% listing.bookings.each do |booking| %>
+              <div class="booking-card mb-3">
+                <div class="booking-header">
+                  <h4>Booking Details</h4>
+                  <% label, bs = booking_status_badge(booking) %>
+                  <span class="badge text-bg-<%= bs %>"><%= label %></span>
+                </div>
 
-    <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
-    <p><% if nights && nights > 0 %>(<%= nights %> nights)<% end %></p>
+                <div class="booking-details">
+                  <div class="detail">
+                    <i class="bi bi-calendar"></i>
+                    <span><strong>Start:</strong> <%= booking.start_date %></span>
+                  </div>
+                  <div class="detail">
+                    <i class="bi bi-calendar-check"></i>
+                    <span><strong>End:</strong> <%= booking.end_date %></span>
+                  </div>
 
-    <p>Number of guests: <%= booking.number_guests %></p>
+                  <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
+                  <% if nights && nights > 0 %>
+                    <div class="detail">
+                      <i class="bi bi-moon"></i>
+                      <span><%= pluralize(nights, "night") %></span>
+                    </div>
+                  <% end %>
 
-    <% if booking.total_price.present? %>
-      <p><strong>Total:</strong> <%= number_to_currency(booking.total_price, unit: "€") %></p>
-      <p><strong>Booked:</strong> <%= l booking.created_at.to_date %></p>
-    <% end %>
-    <% label, bs = booking_status_badge(booking) %>
-    <span class="badge text-bg-<%= bs %>"><%= label %></span>
+                  <div class="detail">
+                    <i class="bi bi-people"></i>
+                    <span><strong>Guests:</strong> <%= booking.number_guests %></span>
+                  </div>
 
+                  <% if booking.total_price.present? %>
+                    <div class="detail total">
+                      <i class="bi bi-cash-stack"></i>
+                      <span><strong>Total:</strong> <%= number_to_currency(booking.total_price, unit: "€") %></span>
+                    </div>
+                    <div class="detail">
+                      <i class="bi bi-clock-history"></i>
+                      <span><strong>Booked:</strong> <%= l booking.created_at.to_date %></span>
+                    </div>
+                  <% end %>
+                </div>
 
-    <% if booking.request_status_pending? %>
-      <%= button_to accept_booking_path(booking),
-                    method: :patch,
-                    class: "btn btn-success rounded-pill px-3 me-2",
-                    data: { turbo_confirm: "Accept this request?" } do %>
-        <i class="bi bi-check2"></i> Accept
+                <% if booking.request_status_pending? %>
+                  <div class="booking-actions">
+                    <%= button_to accept_booking_path(booking),
+                                  method: :patch,
+                                  class: "btn btn-success rounded-pill px-3 me-2",
+                                  data: { turbo_confirm: "Accept this request?" } do %>
+                      <i class="bi bi-check2"></i> Accept
+                    <% end %>
+
+                    <%= button_to reject_booking_path(booking),
+                                  method: :patch,
+                                  class: "btn btn-outline-danger rounded-pill px-3",
+                                  data: { turbo_confirm: "Reject this request?" } do %>
+                      <i class="bi bi-x"></i> Reject
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
-
-      <%= button_to reject_booking_path(booking),
-                    method: :patch,
-                    class: "btn btn-outline-danger rounded-pill px-3",
-                    data: { turbo_confirm: "Reject this request?" } do %>
-        <i class="bi bi-x"></i> Reject
-      <% end %>
+    <% else %>
+      <p>No listings available to show bookings for.</p>
     <% end %>
+  </section>
 
-    <p>----------------</p>
-  <% end %>
+  <hr>
 
-  <p>-----------------------------</p>
-<% end %>
+  <!-- === Your Bookings Section === -->
+  <section class="user-section">
+    <h2>Your Bookings</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+      <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
+                collection: @bookings,
+                as: :booking %>
+    </div>
+  </section>
 
+  <hr>
 
-
-
-
-<%= render partial: "users/listings_made_by_yourself/listings_create_form",
-           locals: { listing: @listing } %>
-
-
-<h2>Bookings fpr your listing:</h2>
-<p>Content..................................</p>
-
-
-<h2>Your Bookings</h2>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-  <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
-             collection: @bookings,
-             as: :booking %>
+  <!-- === Reviews Section === -->
+  <section class="user-section">
+    <%= render partial: "users/reviews/review_section",
+              locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>
+  </section>
 </div>
-
-<%= render partial: "users/reviews/review_section",
-           locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>

@@ -1,0 +1,29 @@
+<%# app/views/users/_listing_card_mini.html.erb %>
+<div class="profile-card">
+  <div class="profile-card-media">
+    <% if listing.photos.attached? %>
+      <%= image_tag url_for(listing.photos.first),
+                    class: "profile-card-image",
+                    alt: listing.title %>
+    <% else %>
+        <%= image_tag asset_path("placeholder.jpeg"),
+                        class: "profile-card-image",
+                        alt: "Placeholder image" %>
+        <% end %>
+  </div>
+
+  <div class="profile-card-body">
+    <h3 class="profile-card-title">
+      <%= link_to (listing.title.presence || "Untitled listing"),
+                  listing_path(listing),
+                  class: "profile-card-link" %>
+    </h3>
+
+    <%= button_to listing_path(listing),
+                  method: :delete,
+                  data: { turbo_confirm: "Are you sure you want to delete this listing?" },
+                  class: "btn btn-danger rounded-pill delete-btn" do %>
+      <i class="bi bi-trash"></i> Delete
+    <% end %>
+  </div>
+</div>

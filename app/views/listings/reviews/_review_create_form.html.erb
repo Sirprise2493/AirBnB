@@ -1,51 +1,46 @@
-<%
-  theme = (local_assigns[:theme] || :green_blue).to_sym
-  palette = {
-    green_blue: { bg: "#b4d495", brd: "#2b6cb0", ring: "rgba(43,108,176,.18)", box: "#eef4ff" },
-    emerald:    { bg: "#d1f5d3", brd: "#0f766e", ring: "rgba(15,118,110,.20)", box: "#ecfdf5" },
-    gray:       { bg: "#f3f4f6", brd: "#374151", ring: "rgba(55,65,81,.18)",  box: "#f9fafb" }
-  }[theme]
-%>
-
-<%= simple_form_for([listing, review],
-      html: {
-        class: "card shadow-sm border-0 review-theme-card",
-        style: "--panel-bg: #{palette[:bg]}; --panel-border: #{palette[:brd]}; --focus-ring: #{palette[:ring]}; --box-bg: #{palette[:box]};"
-      }) do |f| %>
-
+<%= simple_form_for([listing, review], html: { class: "review-card" }) do |f| %>
+  <!-- Preserve return path after submit -->
   <%= hidden_field_tag :return_to, (local_assigns[:return_to] || request.fullpath) %>
 
-  <div class="card-body p-4">
-    <h6 class="card-title mb-2">Write a review</h6>
-    <p class="text-muted small mb-4">Share your experience to help other guests.</p>
+  <div class="review-card-body">
+    <!-- Header -->
+    <h5 class="review-title mb-2">Write a review</h5>
+    <p class="text-muted mb-4">Share your experience with future guests.</p>
 
     <div class="row g-3">
+      <!-- Rating (keep select for now) -->
       <div class="col-12 col-md-4">
         <%= f.input :rating,
           as: :select,
           collection: 1..5,
           include_blank: "Rating (1–5)",
-          input_html: { class: "form-select form-select-sm" },
+          input_html: { class: "form-select" },
           label: "Rating" %>
       </div>
 
+      <!-- Review content -->
       <div class="col-12">
-        <div class="review-content-box p-3 rounded-3">
+        <div class="review-content-box">
           <div class="small text-muted mb-2">Your review</div>
           <%= f.input :content,
             as: :text,
             label: false,
-            input_html: { rows: 4, class: "form-control form-control-sm", placeholder: "What did you like (or not)?" } %>
+            input_html: { rows: 5, class: "form-control", placeholder: "Tell us about your stay..." } %>
         </div>
       </div>
 
-      <div class="col-12 d-flex flex-wrap gap-2">
-        <%= f.button :submit, "Save review", class: "btn btn-primary btn-sm px-3" %>
+      <!-- Actions -->
+      <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+        <!-- Submit review -->
+        <%= f.button :submit, "Save review", class: "btn btn-primary rounded-pill px-4" %>
 
-        <a class="btn btn-outline-secondary btn-sm"
-           data-bs-toggle="collapse"
-           href="##{local_assigns[:collapse_id] || 'review-form-fallback'}"
-           role="button">
+        <!-- Cancel: close the Bootstrap modal -->
+        <!-- Using <a> with href="#" + data-bs-dismiss is very reliable inside forms -->
+        <a href="#"
+           class="btn btn-outline-secondary rounded-pill px-4"
+           role="button"
+           data-bs-dismiss="modal"
+           aria-label="Close">
           Cancel
         </a>
       </div>

@@ -1,28 +1,40 @@
 <!-- app/views/users/bookings_made_by_yourself/_bookings_made_by_yourself_card.html.erb -->
+
 <% listing = booking.listing %>
 
-<div class="col">
-  <div class="bookings-made-by-aourself bookings-made-by-yourself">
+<!-- === Single Booking Card === -->
+<div class="col booking-col">
+  <div class="bookings-made-by-yourself">
     <div class="booking-card-wrapper booking-card--profile">
-      <div class="card booking-card h-100 shadow-sm border-0">
+      <div class="card booking-card shadow-sm border-0">
+
+        <!-- === Listing Image === -->
         <% if listing.respond_to?(:photos) && listing.photos.attached? %>
-          <%= image_tag listing.photos.first, class: "card-img-top booking-card__img", alt: listing.title %>
+          <%= image_tag listing.photos.first,
+                        class: "card-img-top booking-card__img",
+                        alt: listing.title %>
         <% else %>
           <div class="booking-card__img placeholder d-flex align-items-center justify-content-center">
             <span class="text-muted">No image</span>
           </div>
         <% end %>
 
+        <!-- === Booking Details Section === -->
         <div class="card-body d-flex flex-column">
+          <!-- Title + Status Badge -->
           <div class="d-flex align-items-start justify-content-between mb-2">
             <h5 class="card-title mb-0"><%= listing.title %></h5>
             <% label, bs = booking_status_badge(booking) %>
             <span class="badge text-bg-<%= bs %>"><%= label %></span>
           </div>
 
+          <!-- Dates, Guests, Total -->
           <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
           <ul class="list-unstyled small text-muted mb-3">
-            <li><strong>Dates:</strong> <%= l booking.start_date %> – <%= l booking.end_date %> <% if nights && nights > 0 %>(<%= nights %> nights)<% end %></li>
+            <li>
+              <strong>Dates:</strong> <%= l booking.start_date %> – <%= l booking.end_date %>
+              <% if nights && nights > 0 %>(<%= nights %> nights)<% end %>
+            </li>
             <li><strong>Guests:</strong> <%= booking.number_guests %></li>
             <% if booking.total_price.present? %>
               <li><strong>Total:</strong> <%= number_to_currency(booking.total_price, unit: "€") %></li>
@@ -30,36 +42,66 @@
             <li><strong>Booked:</strong> <%= l booking.created_at.to_date %></li>
           </ul>
 
-          <!-- ▼ Stimulus wrapper: contains BOTH the button and the panel ▼ -->
-          <div data-controller="collapse" class="mt-auto">
-            <div class="d-flex flex-wrap gap-2">
-              <%= link_to "Show listing", listing_path(listing), class: "btn btn-success btn-sm" %>
+          <!-- === Action Buttons === -->
+          <div class="mt-auto">
+            <div class="booking-actions-main d-flex flex-wrap gap-2">
+              <!-- Custom Solid Pink Button -->
+              <%= link_to "Show listing",
+                          listing_path(listing),
+                          class: "btn btn-pink btn-sm rounded-pill" %>
 
-              <%= button_to "Delete",
-                            booking_path(booking),
-                            method: :delete,
-                            data: { turbo_confirm: "Are you sure?" },
-                            class: "btn btn-danger btn-sm" %>
-
-              <button class="btn btn-primary btn-sm"
+              <!-- Custom Outline Pink Button -->
+              <button class="btn btn-outline-pink btn-sm rounded-pill"
                       type="button"
-                      data-action="click->collapse#toggle"
-                      aria-expanded="false">
+                      data-bs-toggle="modal"
+                      data-bs-target="#reviewModal-<%= booking.id %>">
                 Give a review
               </button>
             </div>
 
-            <!-- Target must be inside the same controller element -->
-            <div class="collapse mt-3" data-collapse-target="panel">
-              <%= render "listings/reviews/review_create_form",
-                         listing: listing,
-                         review: Review.new,
-                         return_to: user_profile_path %>
+            <!-- Delete Booking -->
+            <div class="booking-action-delete mt-2 text-end">
+              <%= button_to booking_path(booking),
+                            method: :delete,
+                            data: { turbo_confirm: "Are you sure you want to delete this booking?" },
+                            class: "btn btn-delete" do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
             </div>
           </div>
-          <!-- ▲ end Stimulus wrapper ▲ -->
-
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- === Review Modal === -->
+<div class="modal fade"
+     id="reviewModal-<%= booking.id %>"
+     tabindex="-1"
+     aria-labelledby="reviewModalLabel-<%= booking.id %>"
+     aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 rounded-4 shadow-lg">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="reviewModalLabel-<%= booking.id %>">
+          Write a Review
+        </h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body (Review Form Partial) -->
+      <div class="modal-body p-4">
+        <%= render "listings/reviews/review_create_form",
+                   listing: listing,
+                   review: Review.new,
+                   return_to: user_profile_path %>
       </div>
     </div>
   </div>
