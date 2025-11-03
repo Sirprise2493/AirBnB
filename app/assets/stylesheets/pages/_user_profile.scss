@@ -2,7 +2,7 @@
 .user-profile {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 0; // remove side padding — container handles that
+  padding: 3rem 0;
   width: 100%;
 
   .container {
@@ -19,6 +19,7 @@
     color: #222;
   }
 
+  /* === Generic User Section Styling === */
   .user-section {
     margin-bottom: 4rem;
 
@@ -42,7 +43,7 @@
     }
   }
 
-  /* === Bookings Section === */
+  /* === Bookings for Your Listings Section === */
   .listing-bookings {
     h3 {
       font-size: 1.1rem;
@@ -50,7 +51,7 @@
       color: #222;
     }
 
-    .booking-card {
+    .listing-bookings-card {
       background: #fff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       transition: transform 0.2s ease;
@@ -74,8 +75,8 @@
   }
 }
 
-/* === Profile Header Card Styling (Bootstrap structure override) === */
-.user-profile .card {
+/* === Profile Header Card Styling (Top card only) === */
+.user-profile > .container > .card {
   border-radius: 20px;
   background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
@@ -127,13 +128,9 @@
     }
   }
 
-  img {
-    border: 3px solid #fff;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Avatar placeholder (for when no photo is attached) */
+  img,
   div[style*="linear-gradient"] {
+    border: 3px solid #fff;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   }
 }
@@ -172,6 +169,7 @@
       p {
         margin: 0;
         color: #666;
+        overflow-wrap: break-word;
       }
     }
 
