@@ -4,12 +4,12 @@ import "controllers"
 import "@popperjs/core"
 import "bootstrap"
 
-// Flatpickr setup
+// === Flatpickr setup ===
 // Runs each time Turbo loads a new page (replaces normal DOMContentLoaded for Turbo)
 document.addEventListener("turbo:load", () => {
   // Check if Flatpickr library is available
   if (window.flatpickr) {
-    // Intialise flatpickr on any input with placeholder 'Add dates'
+    // Initialise flatpickr on any input with placeholder 'Add dates'
     flatpickr("input[placeholder='Add dates']", {
       mode: "range", // Allow selecting a start + end date
       altInput: true, // Show user-friendly formatted date
@@ -20,16 +20,27 @@ document.addEventListener("turbo:load", () => {
   }
 });
 
-
+// === Collapser logic ===
 document.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-collapser-target]")
-  if (!btn) return
-  e.preventDefault()
-  const id = btn.getAttribute("data-collapser-target")
-  const el = id ? document.getElementById(id) : null
-  if (!el) return
-  el.classList.toggle("show")
-  const expanded = el.classList.contains("show")
-  btn.setAttribute("aria-expanded", expanded ? "true" : "false")
-}, { passive: false })
+  const btn = e.target.closest("[data-collapser-target]");
+  if (!btn) return;
+  e.preventDefault();
+  const id = btn.getAttribute("data-collapser-target");
+  const el = id ? document.getElementById(id) : null;
+  if (!el) return;
+  el.classList.toggle("show");
+  const expanded = el.classList.contains("show");
+  btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+}, { passive: false });
 
+// === FIX FOR DUPLICATED PLACEHOLDERS ===
+// Destroys all Flatpickr instances before Turbo caches the page
+document.addEventListener("turbo:before-cache", () => {
+  if (window.flatpickr) {
+    document.querySelectorAll(".flatpickr-input").forEach((el) => {
+      if (el._flatpickr) {
+        el._flatpickr.destroy();
+      }
+    });
+  }
+});
