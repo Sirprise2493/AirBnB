@@ -33,3 +33,17 @@ document.addEventListener("click", (e) => {
   btn.setAttribute("aria-expanded", expanded ? "true" : "false")
 }, { passive: false })
 
+// === Flatpickr for birthdate field ===
+document.addEventListener("turbo:load", () => {
+  if (window.flatpickr) {
+    flatpickr(".flatpickr-birthdate", {
+      altInput: true,
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
+      maxDate: "today",      // user can’t pick a future date
+      defaultDate: null,
+      disableMobile: true,   // ensures consistent desktop picker styling
+      yearRange: [1900, new Date().getFullYear()], // wide range of years
+    });
+  }
+});

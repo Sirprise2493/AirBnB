@@ -17,11 +17,16 @@ Rails.application.routes.draw do
       patch :reject
     end
   end
-
+  
+  # New addition
+  # ----------------
   # /users/:id/profile (show in controller and special path user_profile_path)
-  # get "users/:id/profile", to: "users#show", as: :user_profile
-  resource :users, only: :show, as: :user_profile
+  # NOTE: using explicit routes to avoid conflicts with Devise and to allow clean /profile URLs
+  get "users", to: "users#show", as: :user_profile
+
+  # ----------------
+  # End new addition 
 
   # Devise auth
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 end

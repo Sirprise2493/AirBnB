@@ -2,7 +2,14 @@
 .user-profile {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 3rem 0; // remove side padding — container handles that
+  width: 100%;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem; // matches Bootstrap spacing
+  }
 
   h1 {
     font-size: 2rem;
@@ -47,6 +54,7 @@
       background: #fff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       transition: transform 0.2s ease;
+
       &:hover {
         transform: translateY(-3px);
       }
@@ -63,5 +71,112 @@
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* === Profile Header Card Styling (Bootstrap structure override) === */
+.user-profile .card {
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  border: none;
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-start;
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.4rem 0.7rem;
+      border-radius: 25px;
+      vertical-align: middle;
+    }
+
+    .bg-info {
+      background-color: rgba(255, 90, 95, 0.15) !important;
+      color: #ff5a5f !important;
+    }
+
+    .bg-success {
+      background-color: rgba(0, 200, 83, 0.15) !important;
+      color: #00a152 !important;
+    }
+
+    .btn-outline-dark.btn-sm {
+      font-weight: 500;
+      border-radius: 25px;
+      transition: all 0.2s ease;
+      padding: 0.3rem 0.9rem;
+
+      &:hover {
+        background-color: #ff5a5f;
+        color: #fff;
+        border-color: #ff5a5f;
+      }
+    }
+  }
+
+  img {
+    border: 3px solid #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Avatar placeholder (for when no photo is attached) */
+  div[style*="linear-gradient"] {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* === Profile Info Section === */
+.user-info-section {
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    border-left: 4px solid #ff5a5f;
+    padding-left: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .user-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+
+    div {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+
+      strong {
+        display: block;
+        color: #444;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        margin: 0;
+        color: #666;
+      }
+    }
+
+    .bio-block {
+      grid-column: 1 / -1;
+    }
   }
 }

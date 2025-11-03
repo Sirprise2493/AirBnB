@@ -1,10 +1,108 @@
 <div class="user-profile">
-  <h1>Profile page of <%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
+
+  <!-- === Profile Header + Info Sections === -->
+  <div class="container">
+
+    <!-- === Profile Header Section === -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body p-4 d-flex align-items-center gap-4 flex-wrap">
+        <!-- Avatar -->
+        <% if @user.photo.attached? %>
+          <%= image_tag @user.photo,
+              style: "width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #ddd;",
+              alt: @user.full_name %>
+        <% else %>
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; font-weight: 600;
+                      box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <%= @user.initials %>
+          </div>
+        <% end %>
+
+        <!-- User Info -->
+        <div>
+          <h1 class="h2 mb-2"><%= [@user.first_name, @user.last_name].compact.join(" ") %></h1>
+
+          <% if @user.is_host? %>
+            <span class="badge bg-info text-dark me-2">🏠 Host</span>
+          <% end %>
+
+          <% if @user.verified? %>
+            <span class="badge bg-success text-white">✓ Verified</span>
+          <% end %>
+
+          <% if user_signed_in? && current_user == @user %>
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-dark btn-sm ms-3" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+   <!-- === Profile Information Section === -->
+  <div class="user-info-section mb-5">
+    <h2>Profile Information</h2>
+
+    <div class="user-info-grid">
+      <div>
+        <strong>Email:</strong>
+        <p><%= @user.email %></p>
+      </div>
+
+      <% if @user.phone.present? %>
+        <div>
+          <strong>Phone:</strong>
+          <p><%= @user.phone %></p>
+        </div>
+      <% end %>
+
+      <% if @user.location.present? %>
+        <div>
+          <strong>Location:</strong>
+          <p><%= @user.location %></p>
+        </div>
+      <% end %>
+
+      <% if @user.birthdate.present? %>
+        <div>
+          <strong>Birthdate:</strong>
+          <p><%= @user.birthdate.strftime("%B %d, %Y") %></p>
+        </div>
+      <% end %>
+
+      <% if @user.gender.present? %>
+        <div>
+          <strong>Gender:</strong>
+          <p><%= @user.gender %></p>
+        </div>
+      <% end %>
+
+      <% if @user.occupation.present? %>
+        <div>
+          <strong>Occupation:</strong>
+          <p><%= @user.occupation %></p>
+        </div>
+      <% end %>
+
+      <% if @user.languages.present? %>
+        <div>
+          <strong>Languages:</strong>
+          <p><%= @user.languages %></p>
+        </div>
+      <% end %>
+
+      <% if @user.bio.present? %>
+        <div class="bio-block">
+          <strong>About:</strong>
+          <p><%= @user.bio %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
   <!-- === Your Listings Section === -->
-  <section class="user-section">
-    <h2>Your Listings</h2>
-    <div class="container">
+  <div class="container">
+    <section class="user-section">
+      <h2>Your Listings</h2>
       <div class="row g-4 align-items-start">
         <div class="col-12 col-md-7">
           <div class="profile-listings-container">
@@ -25,108 +123,118 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <hr>
+
 
   <!-- === Bookings for Your Listings Section === -->
-  <section class="user-section">
-    <h2>Bookings for Your Listings</h2>
+  <div class="container">
+    <section class="user-section">
+      <h2>Bookings for Your Listings</h2>
 
-    <% if @listings.any? %>
-      <% @listings.each do |listing| %>
-        <% if listing.bookings.any? %>
-          <div class="listing-bookings mb-4">
-            <h3><%= listing.title %></h3>
+      <% if @listings.any? %>
+        <% @listings.each do |listing| %>
+          <% if listing.bookings.any? %>
+            <div class="listing-bookings mb-4">
+              <h3><%= listing.title %></h3>
 
-            <% listing.bookings.each do |booking| %>
-              <div class="booking-card mb-3">
-                <div class="booking-header">
-                  <h4>Booking Details</h4>
-                  <% label, bs = booking_status_badge(booking) %>
-                  <span class="badge text-bg-<%= bs %>"><%= label %></span>
-                </div>
-
-                <div class="booking-details">
-                  <div class="detail">
-                    <i class="bi bi-calendar"></i>
-                    <span><strong>Start:</strong> <%= booking.start_date %></span>
-                  </div>
-                  <div class="detail">
-                    <i class="bi bi-calendar-check"></i>
-                    <span><strong>End:</strong> <%= booking.end_date %></span>
+              <% listing.bookings.each do |booking| %>
+                <div class="booking-card mb-3">
+                  <div class="booking-header">
+                    <h4>Booking Details</h4>
+                    <% label, bs = booking_status_badge(booking) %>
+                    <span class="badge text-bg-<%= bs %>"><%= label %></span>
                   </div>
 
-                  <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
-                  <% if nights && nights > 0 %>
+                  <div class="booking-details">
                     <div class="detail">
-                      <i class="bi bi-moon"></i>
-                      <span><%= pluralize(nights, "night") %></span>
-                    </div>
-                  <% end %>
-
-                  <div class="detail">
-                    <i class="bi bi-people"></i>
-                    <span><strong>Guests:</strong> <%= booking.number_guests %></span>
-                  </div>
-
-                  <% if booking.total_price.present? %>
-                    <div class="detail total">
-                      <i class="bi bi-cash-stack"></i>
-                      <span><strong>Total:</strong> <%= number_to_currency(booking.total_price, unit: "€") %></span>
+                      <i class="bi bi-calendar"></i>
+                      <span><strong>Start:</strong> <%= booking.start_date %></span>
                     </div>
                     <div class="detail">
-                      <i class="bi bi-clock-history"></i>
-                      <span><strong>Booked:</strong> <%= l booking.created_at.to_date %></span>
+                      <i class="bi bi-calendar-check"></i>
+                      <span><strong>End:</strong> <%= booking.end_date %></span>
+                    </div>
+
+                    <% nights = (booking.end_date - booking.start_date).to_i rescue nil %>
+                    <% if nights && nights > 0 %>
+                      <div class="detail">
+                        <i class="bi bi-moon"></i>
+                        <span><%= pluralize(nights, "night") %></span>
+                      </div>
+                    <% end %>
+
+                    <div class="detail">
+                      <i class="bi bi-people"></i>
+                      <span><strong>Guests:</strong> <%= booking.number_guests %></span>
+                    </div>
+
+                    <% if booking.total_price.present? %>
+                      <div class="detail total">
+                        <i class="bi bi-cash-stack"></i>
+                        <span><strong>Total:</strong> <%= number_to_currency(booking.total_price, unit: "€") %></span>
+                      </div>
+                      <div class="detail">
+                        <i class="bi bi-clock-history"></i>
+                        <span><strong>Booked:</strong> <%= l booking.created_at.to_date %></span>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <% if booking.request_status_pending? %>
+                    <div class="booking-actions">
+                      <%= button_to accept_booking_path(booking),
+                                    method: :patch,
+                                    class: "btn btn-success rounded-pill px-3 me-2",
+                                    data: { turbo_confirm: "Accept this request?" } do %>
+                        <i class="bi bi-check2"></i> Accept
+                      <% end %>
+
+                      <%= button_to reject_booking_path(booking),
+                                    method: :patch,
+                                    class: "btn btn-outline-danger rounded-pill px-3",
+                                    data: { turbo_confirm: "Reject this request?" } do %>
+                        <i class="bi bi-x"></i> Reject
+                      <% end %>
                     </div>
                   <% end %>
                 </div>
-
-                <% if booking.request_status_pending? %>
-                  <div class="booking-actions">
-                    <%= button_to accept_booking_path(booking),
-                                  method: :patch,
-                                  class: "btn btn-success rounded-pill px-3 me-2",
-                                  data: { turbo_confirm: "Accept this request?" } do %>
-                      <i class="bi bi-check2"></i> Accept
-                    <% end %>
-
-                    <%= button_to reject_booking_path(booking),
-                                  method: :patch,
-                                  class: "btn btn-outline-danger rounded-pill px-3",
-                                  data: { turbo_confirm: "Reject this request?" } do %>
-                      <i class="bi bi-x"></i> Reject
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
+      <% else %>
+        <p>No listings available to show bookings for.</p>
       <% end %>
-    <% else %>
-      <p>No listings available to show bookings for.</p>
-    <% end %>
-  </section>
+    </section>
+  </div>
 
   <hr>
+
 
   <!-- === Your Bookings Section === -->
-  <section class="user-section">
-    <h2>Your Bookings</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-      <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
-                collection: @bookings,
-                as: :booking %>
-    </div>
-  </section>
+  <div class="container">
+    <section class="user-section">
+      <h2>Your Bookings</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <%= render partial: "users/bookings_made_by_yourself/bookings_made_by_yourself_card",
+                  collection: @bookings,
+                  as: :booking %>
+      </div>
+    </section>
+  </div>
 
   <hr>
 
+
   <!-- === Reviews Section === -->
-  <section class="user-section">
-    <%= render partial: "users/reviews/review_section",
-              locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>
-  </section>
+  <div class="container">
+    <section class="user-section">
+      <%= render partial: "users/reviews/review_section",
+                locals: { user: @user, reviews: @reviews, avg_rate: @avg_rate } %>
+    </section>
+  </div>
+
 </div>
