@@ -1,15 +1,116 @@
-<h1>Listings#show</h1>
-<p>Find me in app/views/listings/show.html.erb</p>
+<h1><%= @listing.title %></h1>
 
-<%= render partial: "listings/bookings/bookings_create",
-           locals: {listing: @listing, booking:(@booking || Booking.new) } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="py-5 listing-show">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Content -->
+      <div class="col-12 col-lg-8">
+        <header class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+          <div class="d-flex align-items-center gap-3">
+            <%= cl_image_tag @listing.user.photo.key,
+                  class: "avatar flex-shrink-0", width: 56, height: 56, crop: :thumb, gravity: :face %>
+            <div>
+              <h1 class="h3 mb-1"><%= @listing.address %></h1>
+              <ul class="list-inline text-muted small mb-0">
+                <li class="list-inline-item">User since: <%= @listing.user.created_at.to_date.strftime("%d.%m.%Y") %></li>
+                <li class="list-inline-item">·</li>
+                <li class="list-inline-item">Max. guests: <strong><%= @listing.max_guests %></strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <% avg = (@avg_rate || 0.0).to_f
+             review_count = (@reviews&.respond_to?(:total_count) ? @reviews.total_count : @reviews&.size).to_i
+             filled = avg.floor %>
+
+          <div class="rating-line d-flex align-items-center flex-wrap gap-2"
+               aria-label="Average rating <%= avg %> out of 5">
+            <div class="avg-stars d-inline-flex">
+              <% 1.upto(5) do |i| %>
+                <span class="star <%= i <= filled ? 'filled' : 'empty' %>">★</span>
+              <% end %>
+            </div>
+            <span class="avg-number fw-semibold"><%= number_with_precision(avg, precision: 2) %></span>
+            <span class="sep text-muted">·</span>
+            <span class="review-count text-muted"><%= pluralize(review_count, "review") %></span>
+          </div>
+        </header>
+
+        <article class="card border-0 shadow-sm mt-4">
+          <div class="card-body">
+            <h2 class="h5 mb-3">About this place</h2>
+            <div class="listing-description"
+                 data-controller="description"
+                 data-description-collapsed-lines-value="5">
+              <div class="content" data-description-target="content" aria-expanded="false">
+                <%= simple_format(@listing.description) %>
+              </div>
+              <button class="btn btn-link p-0 mt-2 desc-toggle"
+                      type="button"
+                      data-action="click->description#toggle"
+                      data-description-target="button"
+                      aria-expanded="false">
+                Show more
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <section class="card border-0 shadow-sm mt-4">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Location</h2>
+            <div class="ratio ratio-16x9 rounded overflow-hidden">
+              <%= render "listings/geocoding/map_with_marker",
+                         markers: @markers,
+                         mapbox_api_key: ENV["MAPBOX_API_KEY"] %>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Booking (sticky) -->
+      <aside class="col-12 col-lg-4">
+        <div class="position-sticky" style="top: calc(80px + 1rem);">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <%= render partial: "listings/bookings/bookings_create",
+                         locals: { listing: @listing, booking: (@booking || Booking.new) } %>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+
 
 <%= render "listings/reviews/listings_reviews_show",
            listing: @listing,
            reviews: @reviews,
            avg_rate: @avg_rate,
            review: @review %>
-
-<%= render "listings/geocoding/map_with_marker",
-           markers: @markers,
-           mapbox_api_key: ENV["MAPBOX_API_KEY"] %>
