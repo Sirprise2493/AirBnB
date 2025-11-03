@@ -3,6 +3,77 @@
 
 
 
+<% photos = @listing.photos.to_a %>
+
+<% if photos.any? %>
+<section class="listing-gallery my-4 container"
+         data-controller="gallery"
+         data-gallery-modal-id-value="galleryModal"
+         data-gallery-carousel-id-value="listingCarousel">
+  <div class="gallery-grid">
+    <!-- links groß -->
+    <div class="cell cell--big"
+         data-gallery-target="item"
+         data-src="<%= url_for(photos[0]) %>"
+         data-action="click->gallery#open"
+         data-index="0"></div>
+
+    <!-- rechts 4 kleine -->
+    <% [1,2,3,4].each do |i| %>
+      <% break unless photos[i] %>
+      <div class="cell <%= 'position-relative' if i == 4 && photos.size > 5 %>"
+           data-gallery-target="item"
+           data-src="<%= url_for(photos[i]) %>"
+           data-action="click->gallery#open"
+           data-index="<%= i %>">
+        <% if i == 4 && photos.size > 5 %>
+          <button class="btn btn-light btn-sm gallery-more"
+                  type="button"
+                  data-action="click->gallery#open"
+                  data-index="4">
+            Alle Fotos anzeigen
+          </button>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- Modal + Carousel -->
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= @listing.title %> – Fotos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div id="listingCarousel" class="carousel slide" data-bs-ride="false">
+          <div class="carousel-inner">
+            <% photos.each_with_index do |photo, idx| %>
+              <div class="carousel-item <%= 'active' if idx.zero? %>">
+                <%= image_tag url_for(photo),
+                              class: "d-block w-100",
+                              alt: "#{@listing.title} – Foto #{idx+1}",
+                              loading: "lazy",
+                              decoding: "async" %>
+              </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Zurück</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Weiter</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
 
 
 
