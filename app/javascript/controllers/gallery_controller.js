@@ -1,15 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
-// data-controller="gallery"
+
 export default class extends Controller {
   static targets = ["item"]
   static values = {
-    modalId: String,     // z.B. "galleryModal"
-    carouselId: String,  // z.B. "listingCarousel"
+    modalId: String,
+    carouselId: String,
     rootMargin: { type: String, default: "200px" }
   }
 
   connect() {
+    console.debug("[gallery] connected", {
+      modalId: this.modalIdValue,
+      carouselId: this.carouselIdValue
+    })
     this._setupLazyObserver()
   }
 
@@ -19,17 +23,35 @@ export default class extends Controller {
 
   open(event) {
     event.preventDefault()
-    const index = parseInt(event.currentTarget.dataset.index || "0", 10)
+    const clickedIndex = parseInt(event.currentTarget.dataset.index || "0", 10)
+
+    // ✅ Bootstrap aus ESM ODER globalem window nehmen
+    const bs = (globalThis.bootstrap /* CDN/global */) // eslint-disable-line no-undef
+             || (typeof bootstrap !== "undefined" ? bootstrap : null) // falls du den Import wieder aktivierst
+    if (!bs) {
+      console.error("[gallery] Bootstrap JS nicht gefunden. Lade es via import 'bootstrap' oder CDN.")
+      return
+    }
 
     const modalEl = document.getElementById(this.modalIdValue)
     const carouselEl = document.getElementById(this.carouselIdValue)
+    if (!modalEl || !carouselEl) {
+      console.error("[gallery] Elemente nicht gefunden", { modalEl, carouselEl })
+      return
+    }
 
-    const modal = bootstrap.Modal.getOrCreateInstance(modalEl)
-    const carousel = bootstrap.Carousel.getOrCreateInstance(carouselEl, { interval: false, ride: false })
+    const modal = bs.Modal.getOrCreateInstance(modalEl)
+    const carousel = bs.Carousel.getOrCreateInstance(carouselEl, { interval: false, ride: false })
 
+    const onShown = () => {
+      const total = carouselEl.querySelectorAll(".carousel-item").length
+      const index = Math.max(0, Math.min(clickedIndex, total - 1))
+      carousel.to(index)
+      console.debug("[gallery] jumped to slide", index)
+    }
+
+    modalEl.addEventListener("shown.bs.modal", onShown, { once: true })
     modal.show()
-    // nach Öffnen zum geklickten Slide springen
-    setTimeout(() => carousel.to(index), 50)
   }
 
   _setupLazyObserver() {

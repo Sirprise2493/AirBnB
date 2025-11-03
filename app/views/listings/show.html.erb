@@ -3,77 +3,7 @@
 
 
 
-<% photos = @listing.photos.to_a %>
-
-<% if photos.any? %>
-<section class="listing-gallery my-4 container"
-         data-controller="gallery"
-         data-gallery-modal-id-value="galleryModal"
-         data-gallery-carousel-id-value="listingCarousel">
-  <div class="gallery-grid">
-    <!-- links groß -->
-    <div class="cell cell--big"
-         data-gallery-target="item"
-         data-src="<%= url_for(photos[0]) %>"
-         data-action="click->gallery#open"
-         data-index="0"></div>
-
-    <!-- rechts 4 kleine -->
-    <% [1,2,3,4].each do |i| %>
-      <% break unless photos[i] %>
-      <div class="cell <%= 'position-relative' if i == 4 && photos.size > 5 %>"
-           data-gallery-target="item"
-           data-src="<%= url_for(photos[i]) %>"
-           data-action="click->gallery#open"
-           data-index="<%= i %>">
-        <% if i == 4 && photos.size > 5 %>
-          <button class="btn btn-light btn-sm gallery-more"
-                  type="button"
-                  data-action="click->gallery#open"
-                  data-index="4">
-            Alle Fotos anzeigen
-          </button>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-</section>
-
-<!-- Modal + Carousel -->
-<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
-    <div class="modal-content border-0">
-      <div class="modal-header">
-        <h5 class="modal-title"><%= @listing.title %> – Fotos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-      </div>
-      <div class="modal-body p-0">
-        <div id="listingCarousel" class="carousel slide" data-bs-ride="false">
-          <div class="carousel-inner">
-            <% photos.each_with_index do |photo, idx| %>
-              <div class="carousel-item <%= 'active' if idx.zero? %>">
-                <%= image_tag url_for(photo),
-                              class: "d-block w-100",
-                              alt: "#{@listing.title} – Foto #{idx+1}",
-                              loading: "lazy",
-                              decoding: "async" %>
-              </div>
-            <% end %>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Zurück</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Weiter</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<% end %>
+<%= render "gallery" %>
 
 
 
@@ -82,101 +12,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="py-5 listing-show">
-  <div class="container">
-    <div class="row g-4">
-      <!-- Content -->
-      <div class="col-12 col-lg-8">
-        <header class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-          <div class="d-flex align-items-center gap-3">
-            <%= cl_image_tag @listing.user.photo.key,
-                  class: "avatar flex-shrink-0", width: 56, height: 56, crop: :thumb, gravity: :face %>
-            <div>
-              <h1 class="h3 mb-1"><%= @listing.address %></h1>
-              <ul class="list-inline text-muted small mb-0">
-                <li class="list-inline-item">User since: <%= @listing.user.created_at.to_date.strftime("%d.%m.%Y") %></li>
-                <li class="list-inline-item">·</li>
-                <li class="list-inline-item">Max. guests: <strong><%= @listing.max_guests %></strong></li>
-              </ul>
-            </div>
-          </div>
-
-          <% avg = (@avg_rate || 0.0).to_f
-             review_count = (@reviews&.respond_to?(:total_count) ? @reviews.total_count : @reviews&.size).to_i
-             filled = avg.floor %>
-
-          <div class="rating-line d-flex align-items-center flex-wrap gap-2"
-               aria-label="Average rating <%= avg %> out of 5">
-            <div class="avg-stars d-inline-flex">
-              <% 1.upto(5) do |i| %>
-                <span class="star <%= i <= filled ? 'filled' : 'empty' %>">★</span>
-              <% end %>
-            </div>
-            <span class="avg-number fw-semibold"><%= number_with_precision(avg, precision: 2) %></span>
-            <span class="sep text-muted">·</span>
-            <span class="review-count text-muted"><%= pluralize(review_count, "review") %></span>
-          </div>
-        </header>
-
-        <article class="card border-0 shadow-sm mt-4">
-          <div class="card-body">
-            <h2 class="h5 mb-3">About this place</h2>
-            <div class="listing-description"
-                 data-controller="description"
-                 data-description-collapsed-lines-value="5">
-              <div class="content" data-description-target="content" aria-expanded="false">
-                <%= simple_format(@listing.description) %>
-              </div>
-              <button class="btn btn-link p-0 mt-2 desc-toggle"
-                      type="button"
-                      data-action="click->description#toggle"
-                      data-description-target="button"
-                      aria-expanded="false">
-                Show more
-              </button>
-            </div>
-          </div>
-        </article>
-
-        <section class="card border-0 shadow-sm mt-4">
-          <div class="card-body">
-            <h2 class="h5 mb-3">Location</h2>
-            <div class="ratio ratio-16x9 rounded overflow-hidden">
-              <%= render "listings/geocoding/map_with_marker",
-                         markers: @markers,
-                         mapbox_api_key: ENV["MAPBOX_API_KEY"] %>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Booking (sticky) -->
-      <aside class="col-12 col-lg-4">
-        <div class="position-sticky" style="top: calc(80px + 1rem);">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <%= render partial: "listings/bookings/bookings_create",
-                         locals: { listing: @listing, booking: (@booking || Booking.new) } %>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
+<%= render "show_content",
+      listing: @listing,
+      avg_rate: @avg_rate,
+      reviews: @reviews,
+      markers: @markers,
+      booking: (@booking || Booking.new) %>
 
 
 
