@@ -1,25 +1,19 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
-
 // === Flatpickr setup ===
-// Runs each time Turbo loads a new page (replaces normal DOMContentLoaded for Turbo)
 document.addEventListener("turbo:load", () => {
-  // Check if Flatpickr library is available
   if (window.flatpickr) {
-    // Initialise flatpickr on any input with placeholder 'Add dates'
     flatpickr("input[placeholder='Add dates']", {
-      mode: "range", // Allow selecting a start + end date
-      altInput: true, // Show user-friendly formatted date
+      mode: "range",
+      altInput: true,
       altFormat: "F j, Y",
-      dateFormat: "Y-m-d", // Actual format saved in input for Rails
-      allowInput: true, // Let users manually type dates if they want
+      dateFormat: "Y-m-d",
+      allowInput: true,
     });
   }
 });
-
 // === Collapser logic ===
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-collapser-target]");
@@ -32,15 +26,16 @@ document.addEventListener("click", (e) => {
   const expanded = el.classList.contains("show");
   btn.setAttribute("aria-expanded", expanded ? "true" : "false");
 }, { passive: false });
-
 // === FIX FOR DUPLICATED PLACEHOLDERS ===
-// Destroys all Flatpickr instances before Turbo caches the page
 document.addEventListener("turbo:before-cache", () => {
   if (window.flatpickr) {
     document.querySelectorAll(".flatpickr-input").forEach((el) => {
       if (el._flatpickr) {
         el._flatpickr.destroy();
       }
+    });
+  }
+});
 // === Flatpickr for birthdate field ===
 document.addEventListener("turbo:load", () => {
   if (window.flatpickr) {
@@ -48,10 +43,10 @@ document.addEventListener("turbo:load", () => {
       altInput: true,
       altFormat: "F j, Y",
       dateFormat: "Y-m-d",
-      maxDate: "today",      // user can’t pick a future date
+      maxDate: "today",
       defaultDate: null,
-      disableMobile: true,   // ensures consistent desktop picker styling
-      yearRange: [1900, new Date().getFullYear()], // wide range of years
+      disableMobile: true,
+      yearRange: [1900, new Date().getFullYear()],
     });
   }
 });
