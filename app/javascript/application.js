@@ -36,6 +36,7 @@ document.addEventListener("turbo:before-cache", () => {
     });
   }
 });
+
 // === Flatpickr for birthdate field ===
 document.addEventListener("turbo:load", () => {
   if (window.flatpickr) {
