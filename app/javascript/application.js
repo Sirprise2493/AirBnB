@@ -1,9 +1,7 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
-
 // === Flatpickr setup ===
 document.addEventListener("turbo:load", () => {
   if (window.flatpickr) {
@@ -16,7 +14,6 @@ document.addEventListener("turbo:load", () => {
     });
   }
 });
-
 // === Collapser logic ===
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-collapser-target]");
@@ -29,7 +26,6 @@ document.addEventListener("click", (e) => {
   const expanded = el.classList.contains("show");
   btn.setAttribute("aria-expanded", expanded ? "true" : "false");
 }, { passive: false });
-
 // === FIX FOR DUPLICATED PLACEHOLDERS ===
 document.addEventListener("turbo:before-cache", () => {
   if (window.flatpickr) {

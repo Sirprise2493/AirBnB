@@ -67,6 +67,9 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
+ # For Cloudinary
+  config.active_storage.service = :cloudinary
+
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "air_bn_b_production"
@@ -94,4 +97,8 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+ # For Cloudinary
+  #config.active_storage.service = :cloudinary
+
 end
