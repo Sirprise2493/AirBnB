@@ -1,28 +1,18 @@
-<h1><%= @listing.title %></h1>
+<div class="listing-show">
+  <h1><%= @listing.title %></h1>
 
+  <%= render "gallery" %>
 
+  <%= render "show_content",
+        listing: @listing,
+        avg_rate: @avg_rate,
+        reviews: @reviews,
+        markers: @markers,
+        booking: (@booking || Booking.new) %>
 
-
-<%= render "gallery" %>
-
-
-
-
-
-
-
-
-<%= render "show_content",
-      listing: @listing,
-      avg_rate: @avg_rate,
-      reviews: @reviews,
-      markers: @markers,
-      booking: (@booking || Booking.new) %>
-
-
-
-<%= render "listings/reviews/listings_reviews_show",
-           listing: @listing,
-           reviews: @reviews,
-           avg_rate: @avg_rate,
-           review: @review %>
+  <%= render "listings/reviews/listings_reviews_show",
+             listing: @listing,
+             reviews: @reviews,
+             avg_rate: @avg_rate,
+             review: @review %>
+</div>

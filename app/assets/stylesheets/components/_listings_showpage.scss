@@ -1,4 +1,4 @@
-/* app/assets/stylesheets/listings_show.scss */
+/* app/assets/stylesheets/components/_listings_showpage.scss */
 @mixin line-clamp($value) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -16,6 +16,38 @@
 .listing-show {
   .head { margin-top: .5rem; }
   .avatar { border-radius: 50%; display: inline-block; }
+
+  /* --- Centered, elegant title --- */
+  h1 {
+    font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+    margin: 1.5rem 0 2rem;
+    position: relative;
+    display: block;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: #ff5a5f;
+      margin: 0.6rem auto 0;
+      border-radius: 2px;
+    }
+  }
+
+  /* --- Section titles (About this place, Location, etc.) --- */
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.2rem;
+    padding-left: 0.6rem;
+    border-left: 4px solid #ff5a5f;
+  }
 
   .rating-line {
     .avg-stars {
@@ -42,9 +74,40 @@
       font-weight: 600;
       text-decoration: none;
       padding: 0;
+      color: #ff5a5f;
 
       &:hover { text-decoration: underline; }
       &:focus { outline: none; text-decoration: underline; }
+    }
+  }
+
+  /* --- Airbnb-style buttons --- */
+  .btn,
+  [class*="btn-"] {
+    background-color: #ff5a5f !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 0.6em 1.4em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #d60436 !important;
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.25);
+    }
+
+    &:disabled,
+    &.disabled {
+      background-color: #ffb3b5 !important;
+      cursor: not-allowed;
     }
   }
 
@@ -55,5 +118,44 @@
   @media (max-width: 575.98px) {
     .rating-line { gap: .25rem !important; }
     .sep { display: none; }
+
+    h1 {
+      font-size: 1.7rem;
+      &::after { width: 40px; height: 2px; }
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      border-left-width: 3px;
+      padding-left: 0.5rem;
+    }
+  }
+}
+
+/* === Refined "Show more" button style === */
+.listing-show .listing-description .desc-toggle {
+  display: inline-block;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  color: #444;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  margin-top: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: #f2f2f2;
+    border-color: #bbb;
+    color: #222;
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   }
 }
