@@ -152,3 +152,17 @@ body {
   display: none !important;
 }
 
+/* === Limit listing description length === */
+.listing-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of visible lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #82888a;
+  font-size: 0.95rem;
+  margin-bottom: 0.6em;
+  line-height: 1.5;
+  min-height: 3.9em; /* keeps cards uniform */
+}
+
